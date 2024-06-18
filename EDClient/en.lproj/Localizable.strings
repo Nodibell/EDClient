@@ -1,0 +1,27 @@
+/* 
+  Localizable.strings
+  EDClient
+
+  Created by Oleksii Chumak on 15.06.2024.
+  
+*/
+
+"fullAddress" = "Full address";
+"scheduleFor" = "Online schedule of hourly blackouts";
+"confirmationButton" = "Confirm";
+"City" = "City";
+"Street" = "Street";
+"Building" = "Building";
+"3symbolsNeeded" = "Enter at least 3 symbols";
+"3symbolsNeededDescription %@" = "Please, enter at least three symbols to start searching for the wanted %@";
+"startInputBuilding" = "Start enter the building";
+"inputBuildingDescription" = "Enter the building you need to start searching.";
+"scheduleFormTitle" = "Get Blackouts Schedule";
+"loading" = "Loading";
+"noBlackouts" = "– no blackouts are planned";
+"possibleBlackouts" = "– possible blackouts";
+"blackouts" = "– blackouts happened";
+"getScheduleText" = "Get schedule of blackouts";
+"pinnedAddressesTitle" = "Закріплені адреси";
+"timeText" = "Time";
+"statusText" = "Status";

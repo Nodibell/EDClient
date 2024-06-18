@@ -1,0 +1,28 @@
+/* 
+  Localizable.strings
+  EDClient
+
+  Created by Oleksii Chumak on 15.06.2024.
+  
+*/
+
+"fullAddress" = "Повна адреса";
+"scheduleFor" = "Онлайн графік погодиних знеструмлень для";
+"confirmationButton" = "Отримати";
+"City" = "Місто";
+"Street" = "Вулиця";
+"Building" = "Будинок";
+"3symbolsNeeded" = "Уведіть хоча б 3 символи";
+"3symbolsNeededDescription" = "Будь ласка, уведіть хоча б три символи, щоб розпочати пошук";
+"startInputBuilding" = "Уведіть номер будинку";
+"inputBuildingDescription" = "Розпочніть вводити номер будинку, щоб розпочати пошук";
+"scheduleFormTitle" = "Отримати ГПЗ(ГПВ)";
+"loading" = "Завантаження";
+"noBlackouts" = "– знеструмлення не планується";
+"possibleBlackouts" = "– можливе знеструмлення";
+"blackouts" = "– знеструмленння";
+"getScheduleText" = "Отримати ГПЗ(ГПВ)";
+"pinnedAddressesTitle" = "Закріплені адреси";
+"timeText" = "Час";
+"statusText" = "Статус";
+

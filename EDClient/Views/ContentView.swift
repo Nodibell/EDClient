@@ -7,16 +7,16 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct ContentView: View {
+    @EnvironmentObject var addressInfo: FormAddress
+    let internetChecker = InternetChecker.shared.checkConnectivity()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        MainView()
     }
+    
 }
 
 #Preview {
