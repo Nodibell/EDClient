@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 
-enum LightStatus: Int, Decodable, Hashable {
-    case disconnected = 2
+enum Status: Int, Decodable, Hashable {
+    case disconnected = 0
     case posibleDisconnection = 1
-    case connected = 0
+    case connected = 2
     
     var image: Image? {
         switch self {

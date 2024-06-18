@@ -13,9 +13,9 @@ struct LightTime: Decodable, CustomStringConvertible {
     }
     
     let time: String
-    let status: LightStatus
+    let status: Status
     
-    init(time: String, status: LightStatus) {
+    init(time: String, status: Status) {
         self.time = time
         self.status = status
     }

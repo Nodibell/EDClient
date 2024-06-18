@@ -94,8 +94,8 @@ struct ScheduleView: View {
                                 .monospaced()
                         },
                         icon: {
-                            LightStatus.connected.image.foregroundStyle(
-                                electricityColor(status: LightStatus.connected)
+                            Status.connected.image.foregroundStyle(
+                                electricityColor(status: Status.connected)
                             )
                         }
                     )
@@ -106,8 +106,8 @@ struct ScheduleView: View {
                                 .monospaced()
                         },
                         icon: {
-                            LightStatus.posibleDisconnection.image.foregroundStyle(
-                                electricityColor(status: LightStatus.posibleDisconnection)
+                            Status.posibleDisconnection.image.foregroundStyle(
+                                electricityColor(status: Status.posibleDisconnection)
                             )
                         }
                     )
@@ -118,8 +118,8 @@ struct ScheduleView: View {
                                 .monospaced()
                         },
                         icon: {
-                            LightStatus.disconnected.image.foregroundColor(
-                                electricityColor(status: LightStatus.disconnected)
+                            Status.disconnected.image.foregroundColor(
+                                electricityColor(status: Status.disconnected)
                             )
                         }
                     )
@@ -160,7 +160,7 @@ struct ScheduleView: View {
         }
     }
 
-    private func electricityColor(status: LightStatus) -> Color {
+    private func electricityColor(status: Status) -> Color {
         switch status {
         case .connected:
             return .green
@@ -177,9 +177,9 @@ struct ScheduleView: View {
         queue: "Черга 4.1",
         day: "Пт 20.06",
         lightTimes: [
-            LightTime(time: "00:00", status: LightStatus(rawValue: 2) ?? .connected),
-            LightTime(time: "01:00", status: LightStatus(rawValue: 1) ?? .connected),
-            LightTime(time: "02:00", status: LightStatus(rawValue: 0) ?? .connected)
+            LightTime(time: "00:00", status: Status(rawValue: 2) ?? .connected),
+            LightTime(time: "01:00", status: Status(rawValue: 1) ?? .connected),
+            LightTime(time: "02:00", status: Status(rawValue: 0) ?? .connected)
         ]
     ), addressInfo: PinnedAddress(cityName: "місто Немирів", streetName: "вулиця Горького", buildingNumber: "50", cityID: 523010100, streetID: 13366, buildingID: 270424) as Address)
 }
