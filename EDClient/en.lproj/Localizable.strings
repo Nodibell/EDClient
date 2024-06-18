@@ -22,6 +22,6 @@
 "possibleBlackouts" = "– possible blackouts";
 "blackouts" = "– blackouts happened";
 "getScheduleText" = "Get schedule of blackouts";
-"pinnedAddressesTitle" = "Закріплені адреси";
+"pinnedAddressesTitle" = "Pinned addresses";
 "timeText" = "Time";
 "statusText" = "Status";

@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct City {
+struct City: Prompt {
+    var description: String {
+        "(id: \(id), value: \(value))"
+    }
+    
     let id: Int
     let value: String
 }

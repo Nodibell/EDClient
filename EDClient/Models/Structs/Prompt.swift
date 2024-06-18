@@ -7,10 +7,7 @@
 
 import Foundation
 
-struct Prompt: Decodable, Identifiable, CustomStringConvertible {
-    var description: String {
-        "(id: \(id), value: \(value))"
-    }
-    let id: Int
-    let value: String
+protocol Prompt: Decodable, Identifiable, CustomStringConvertible {
+    var id: Int { get }
+    var value: String { get }
 }

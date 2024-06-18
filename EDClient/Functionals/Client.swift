@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Client {
     
@@ -13,13 +14,13 @@ class Client {
     
     private init () {}
     
-    func getPrompts(for promptType: InformationType, id: Int = -1, search: String) async throws -> [Prompt] {
+    func getPrompts<T: Prompt>(for promptType: InformationType, id: Int = -1, search: String) async throws -> [T] {
         guard let url = providePromptURL(for: promptType, id: id, search: search) else {
             return []
         }
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-            let prompts = try JSONDecoder().decode([Prompt].self, from: data)
+            let prompts = try JSONDecoder().decode([T].self, from: data)
             return prompts
         } catch {
             return []
@@ -68,13 +69,22 @@ class Client {
         return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs//disconnection.php?cityId=\(cityID)&streetId=\(streetID)&buildingId=\(buildingID)")
     }
     
+    
+    
     func getPinnedAddresses() -> [PinnedAddress] {
+        if let uuid = UIDevice.current.identifierForVendor?.uuidString {
+            providePinnedAddressesURL(id: uuid)
+        }
         print("returned Pinned Addresses")
         return [
             PinnedAddress(cityName: "місто Вінниця", streetName: "вулиця Соборна", buildingNumber: "21", cityID: 0, streetID: 0, buildingID: 0),
             PinnedAddress(cityName: "місто Вінниця", streetName: "вулиця Магістрацька", buildingNumber: "12", cityID: 1, streetID: 1, buildingID: 1),
             PinnedAddress(cityName: "місто Немирів (Немирівський Район/М.Немирів)", streetName: "вулиця Горького", buildingNumber: "50", cityID: 523010100, streetID: 13366, buildingID: 270425)
         ]
+    }
+    
+    private func providePinnedAddressesURL(id: String) /*-> URL?*/ {
+        print("Recieved \(id)")
     }
 }
 

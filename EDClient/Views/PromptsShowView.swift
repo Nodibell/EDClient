@@ -14,7 +14,7 @@ struct PromptsShowView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var addressInfo: FormAddress
     @State var searchText: String = ""
-    @State var prompts: [Prompt] = []
+    @State var prompts: [any Prompt] = []
     @State var isLoading: Bool = false
     
     var body: some View {
@@ -89,11 +89,11 @@ struct PromptsShowView: View {
             do {
                 switch promptType {
                 case .city:
-                    prompts = try await Client.shared.getPrompts(for: promptType, search: searchText)
+                    prompts = try await Client.shared.getPrompts(for: promptType, search: searchText) as [City]
                 case .street:
-                    prompts = try await Client.shared.getPrompts(for: promptType, id: addressInfo.cityID, search: searchText)
+                    prompts = try await Client.shared.getPrompts(for: promptType, id: addressInfo.cityID, search: searchText) as [Street]
                 case .building:
-                    prompts = try await Client.shared.getPrompts(for: promptType, id: addressInfo.streetID, search: searchText)
+                    prompts = try await Client.shared.getPrompts(for: promptType, id: addressInfo.streetID, search: searchText) as [Building]
                 }
             } catch {
                 print("Error fetching prompts: \(error)")
