@@ -29,8 +29,9 @@ struct AddressInfoView: View {
                     .padding(.vertical, 10)
                     .background(
                         AngularGradient(
-                            gradient: Gradient(colors: [.orange, .pink, .indigo,
-                                                        .purple, .orange.opacity(3)]),
+                            gradient: Gradient(colors:
+                                                [.orange, .pink, .indigo, .purple, .orange.opacity(3)]
+                                              ),
                             center: .center,
                             startAngle: .degrees(rotation),
                             endAngle: .degrees(rotation + 360)
@@ -41,7 +42,6 @@ struct AddressInfoView: View {
                         cornerRadius: 8,
                         style: .continuous
                     ))
-                    .shadow(radius: 3)
                     .padding(4)
                     .background(.orange)
                     .clipShape(RoundedRectangle(
@@ -49,7 +49,7 @@ struct AddressInfoView: View {
                         style: .continuous
                     ))
                     .shadow(color: .white.opacity(0.5), radius: 8)
-                                        
+                
                 
                 Text(queue)
                     .font(.headline)
@@ -80,7 +80,7 @@ struct AddressInfoView: View {
                         cornerRadius: 8,
                         style: .continuous
                     ))
-                    .shadow(color: .white.opacity(0.5), radius: 8)
+                    .shadow(color: .white.opacity(0.53), radius: 8)
                 
             }
             .padding()
@@ -88,19 +88,21 @@ struct AddressInfoView: View {
         .onAppear {
             rotation = 360
         }
-        .background(LinearGradient(colors: [.orange.opacity(5), .pink.opacity(2), .indigo.opacity(3)], startPoint: .bottomTrailing, endPoint: .topLeading))
+        .background(LinearGradient(colors: [.orange.opacity(3), .pink.opacity(2), .indigo.opacity(3)], startPoint: .bottomTrailing, endPoint: .topLeading)
+            .grayscale(0.25))
+        
         .clipShape(
             RoundedRectangle(
                 cornerRadius: 24,
                 style: .continuous
             )
         )
-        .shadow(color: .white.opacity(0.5), radius: 8)
+        .shadow(color: .white.opacity(0.4), radius: 8)
         .padding()
         
     }
 }
 
 #Preview {
-    AddressInfoView(day: "Пт 20.06", queue: "Черга 3.1", cityName: "місто Вінниця", streetName: "вулиця Соборна", buildingNumber: "23")
+    AddressInfoView(day: "Пт 21.06", queue: "Черга 3.1", cityName: "місто Вінниця", streetName: "вулиця Соборна", buildingNumber: "23")
 }

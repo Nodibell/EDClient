@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 import UIKit
 
 class Client {
@@ -18,14 +19,25 @@ class Client {
         guard let url = providePromptURL(for: promptType, id: id, search: search) else {
             return []
         }
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let prompts = try JSONDecoder().decode([T].self, from: data)
-            return prompts
-        } catch {
-            return []
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            AF.request(url)
+                .responseData { response in
+                    switch response.result {
+                    case let .success(data):
+                        do {
+                            let prompts = try JSONDecoder().decode([T].self, from: data)
+                            continuation.resume(returning: prompts)
+                        } catch {
+                            continuation.resume(throwing: error)
+                        }
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
+                }
         }
     }
+
     
     private func providePromptURL(for promptType: InformationType, id: Int = -1, search: String) -> URL? {
         switch promptType {
@@ -44,26 +56,28 @@ class Client {
         }
         
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            guard let jsonString = String(data: data, encoding: .utf8) else {
-                return Schedule()
+            return try await withCheckedThrowingContinuation { continuation in
+                AF.request(url)
+                    .responseData { response in
+                        switch response.result {
+                        case let .success(data):
+                            do {
+                                let schedule = try JSONDecoder().decode(Schedule.self, from: data)
+                                continuation.resume(returning: schedule)
+                            } catch {
+                                continuation.resume(throwing: error)
+                            }
+                        case let .failure(error):
+                            continuation.resume(throwing: error)
+                        }
+                    }
             }
-        
-            print("Received JSON String: \(jsonString)")
-            
-            let decoder = JSONDecoder()
-
-            let jsonData = Data(jsonString.utf8)
-            
-            let schedule = try decoder.decode(Schedule.self, from: jsonData)
-            return schedule
         } catch {
             print("Error fetching or decoding schedule: \(error)")
             return Schedule()
         }
     }
-
+    
     
     private func provideScheduleURL(cityID: Int, streetID: Int, buildingID: Int) -> URL? {
         return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs//disconnection.php?cityId=\(cityID)&streetId=\(streetID)&buildingId=\(buildingID)")

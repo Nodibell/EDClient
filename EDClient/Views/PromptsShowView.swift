@@ -13,13 +13,14 @@ struct PromptsShowView: View {
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var addressInfo: FormAddress
-    @State var searchText: String = ""
-    @State var prompts: [any Prompt] = []
-    @State var isLoading: Bool = false
+    @State private var searchText: String = ""
+    @State private var prompts: [any Prompt] = []
+    @State private var isLoading: Bool = false
+    
     
     var body: some View {
         VStack {
-            if isNetworkConnected() {
+            if InternetChecker.shared.checkConnectivity() {
                 List {
                     ForEach(prompts, id: \.id) { prompt in
                         HStack {
@@ -76,7 +77,7 @@ struct PromptsShowView: View {
                         ContentUnavailableView.search
                     }
                 }
-
+                
             } else {
                 ContentUnavailableView.init("Connection Error", systemImage: "wifi.slash", description: Text("Failed to connect to the network"))
             }
@@ -101,13 +102,9 @@ struct PromptsShowView: View {
             isLoading = false
         }
     }
-    
-    private func isNetworkConnected() -> Bool {
-        return InternetChecker.shared.checkConnectivity()
-    }
 }
 
 
 #Preview {
-    PromptsShowView(promptType: .city, searchText: "Нем")
+    PromptsShowView(promptType: .city)
 }

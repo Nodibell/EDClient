@@ -94,7 +94,7 @@ struct ScheduleView: View {
                                 .monospaced()
                         },
                         icon: {
-                            LightStatus.connected.image.foregroundColor(
+                            LightStatus.connected.image.foregroundStyle(
                                 electricityColor(status: LightStatus.connected)
                             )
                         }
@@ -106,7 +106,7 @@ struct ScheduleView: View {
                                 .monospaced()
                         },
                         icon: {
-                            LightStatus.posibleDisconnection.image.foregroundColor(
+                            LightStatus.posibleDisconnection.image.foregroundStyle(
                                 electricityColor(status: LightStatus.posibleDisconnection)
                             )
                         }
