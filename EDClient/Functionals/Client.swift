@@ -42,11 +42,11 @@ class Client {
     private func providePromptURL(for promptType: InformationType, id: Int = -1, search: String) -> URL? {
         switch promptType {
         case .city:
-            //return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/citiesFetch.php?value=\(search)")
-            return URL(string: "http://localhost:5062/api/Address/City?query=\(search)")
+            return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/citiesFetch.php?value=\(search)")
+            //return URL(string: "http://localhost:5062/api/Address/City?query=\(search)")
         case .street:
-            //return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/streetsFetch.php?code=\(id)&search=\(search)")
-            return URL(string: "http://localhost:5062/api/Address/Street?cityId=\(id)&nameOfStreet=\(search)")
+            return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/streetsFetch.php?code=\(id)&search=\(search)")
+            //return URL(string: "http://localhost:5062/api/Address/Street?cityId=\(id)&nameOfStreet=\(search)")
         case .building:
             return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/buildingsFetch.php?id=\(id)&search=\(search)")
             //return URL(string: "http://localhost:5062/api/Address/HouseNumber?streetId=\(id)&numberOfBuild=\(search)")
@@ -87,22 +87,29 @@ class Client {
         //return URL(string: "http://localhost:5062/api/Disconnections?cityId=\(cityID)&streetId=\(streetID)&numberOfHouseId=\(buildingID)")
     }
     
-    
-    
+    // input: uuid: String
     func getPinnedAddresses() -> [PinnedAddress] {
         if let uuid = UIDevice.current.identifierForVendor?.uuidString {
-            providePinnedAddressesURL(id: uuid)
+            if let url = providePinnedAddressesURL(uiid: uuid) {
+                print("Geting from \(url) Pinned Addresses")
+            }
         }
         print("returned Pinned Addresses")
         return [
-            PinnedAddress(cityName: "місто Вінниця", streetName: "вулиця Соборна", buildingNumber: "21", cityID: 0, streetID: 0, buildingID: 0),
-            PinnedAddress(cityName: "місто Вінниця", streetName: "вулиця Магістрацька", buildingNumber: "12", cityID: 1, streetID: 1, buildingID: 1),
-            PinnedAddress(cityName: "місто Немирів (Немирівський Район/М.Немирів)", streetName: "вулиця Горького", buildingNumber: "50", cityID: 523010100, streetID: 13366, buildingID: 270425)
+            PinnedAddress(cityName: "м. Вінниця", streetName: "вулиця Соборна", buildingNumber: "21", cityID: 0, streetID: 0, buildingID: 0),
+            PinnedAddress(cityName: "м. Київ", streetName: "вулиця Київська", buildingNumber: "42", cityID: 1, streetID: 1, buildingID: 1),
+            PinnedAddress(cityName: "м. Тернопіль", streetName: "вулиця Тернопільська", buildingNumber: "8", cityID: 2, streetID: 2, buildingID: 2),
+            PinnedAddress(cityName: "м. Вінниця", streetName: "вулиця Магістрацька", buildingNumber: "12", cityID: 3, streetID: 3, buildingID: 3),
+            PinnedAddress(cityName: "м. Немирів", streetName: "вулиця Горького", buildingNumber: "50", cityID: 523010100, streetID: 13366, buildingID: 270425)
         ]
     }
     
-    private func providePinnedAddressesURL(id: String) /*-> URL?*/ {
-        print("Recieved \(id)")
+    func postPinnedAddress(uiid: String, ulr: String) {
+        
+    }
+    
+    private func providePinnedAddressesURL(uiid: String) -> URL? {
+        return URL(string: "http://localhost:5062/api/PinnedAddresses?DeviceID=\(uiid)")
     }
 }
 

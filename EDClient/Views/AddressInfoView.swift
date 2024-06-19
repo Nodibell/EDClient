@@ -19,7 +19,7 @@ struct AddressInfoView: View {
     var body: some View {
         HStack {
             VStack(alignment: .center, spacing: 8) {
-                Text(day.uppercased())
+                Text(day.capitalized(with: .current))
                     .font(.title)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
@@ -104,5 +104,5 @@ struct AddressInfoView: View {
 }
 
 #Preview {
-    AddressInfoView(day: "Пт 21.06", queue: "Черга 3.1", cityName: "місто Вінниця", streetName: "вулиця Соборна", buildingNumber: "23")
+    AddressInfoView(day: "Пт 21.06", queue: "Черга 3.1", cityName: "м. Вінниця", streetName: "вулиця Соборна", buildingNumber: "23")
 }

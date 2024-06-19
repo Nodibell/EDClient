@@ -33,7 +33,6 @@ struct PromptsShowView: View {
                                 of: promptType,
                                 id: prompt.id,
                                 value: prompt.value
-                                
                             )
                             dismiss()
                         }
@@ -61,10 +60,10 @@ struct PromptsShowView: View {
                     } else if prompts.isEmpty && (searchText.count <= neededSymbolsCount || promptType == .building) {
                         if promptType != .building && searchText.count <= neededSymbolsCount {
                             ContentUnavailableView(
-                                LocalizedStringKey("3symbolsNeeded"),
+                                LocalizedStringKey("3symbolsNeededPromptsShowView"),
                                 systemImage: "magnifyingglass",
                                 description: Text(
-                                    LocalizedStringKey("3symbolsNeededDescription"))
+                                    LocalizedStringKey("3symbolsNeededDescriptionPromptsShowView"))
                             )
                         } else {
                             ContentUnavailableView(
@@ -96,6 +95,7 @@ struct PromptsShowView: View {
                 case .building:
                     prompts = try await Client.shared.getPrompts(for: promptType, id: addressInfo.streetID, search: searchText) as [Building]
                 }
+                
             } catch {
                 print("Error fetching prompts: \(error)")
             }

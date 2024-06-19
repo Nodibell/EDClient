@@ -12,8 +12,8 @@
 "City" = "Місто";
 "Street" = "Вулиця";
 "Building" = "Будинок";
-"3symbolsNeeded" = "Уведіть хоча б 3 символи";
-"3symbolsNeededDescription" = "Будь ласка, уведіть хоча б три символи, щоб розпочати пошук";
+"3symbolsNeededPromptsShowView" = "Уведіть хоча б 3 символи";
+"3symbolsNeededDescriptionPromptsShowView" = "Будь ласка, уведіть хоча б три символи, щоб розпочати пошук";
 "startInputBuilding" = "Уведіть номер будинку";
 "inputBuildingDescription" = "Розпочніть вводити номер будинку, щоб розпочати пошук";
 "scheduleFormTitle" = "Отримати ГПЗ(ГПВ)";

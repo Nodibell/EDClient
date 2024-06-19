@@ -26,6 +26,7 @@
 		BA46CB472C1B11030062965B /* AddressChoosingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA46CB462C1B11030062965B /* AddressChoosingView.swift */; };
 		BA46CB492C1B11540062965B /* FormAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA46CB482C1B11540062965B /* FormAddress.swift */; };
 		BA46CB4B2C1C382B0062965B /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA46CB4A2C1C382B0062965B /* Status.swift */; };
+		BA9EAE762C2337CD001227D2 /* HoursTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EAE752C2337CD001227D2 /* HoursTableView.swift */; };
 		BAA3190D2C2200D9005469D9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BAA3190C2C2200D9005469D9 /* Alamofire */; };
 		BABE80082C1F3B9E001E4395 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE80072C1F3B9E001E4395 /* MainView.swift */; };
 		BABE800A2C1F3FF0001E4395 /* PinnedAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE80092C1F3FF0001E4395 /* PinnedAddress.swift */; };
@@ -58,6 +59,7 @@
 		BA46CB462C1B11030062965B /* AddressChoosingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressChoosingView.swift; sourceTree = "<group>"; };
 		BA46CB482C1B11540062965B /* FormAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormAddress.swift; sourceTree = "<group>"; };
 		BA46CB4A2C1C382B0062965B /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
+		BA9EAE752C2337CD001227D2 /* HoursTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursTableView.swift; sourceTree = "<group>"; };
 		BABE80072C1F3B9E001E4395 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		BABE80092C1F3FF0001E4395 /* PinnedAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedAddress.swift; sourceTree = "<group>"; };
 		BABE800D2C1F5D56001E4395 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				BA403FD12C1E17BB003C23CE /* AddressInfoView.swift */,
 				BABE80072C1F3B9E001E4395 /* MainView.swift */,
 				BABE80102C206188001E4395 /* PinnedAddressItemView.swift */,
+				BA9EAE752C2337CD001227D2 /* HoursTableView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				BAC20CAC2C1CB7CC00BE8AD5 /* InternetChecker.swift in Sources */,
 				BA3355722C1DD1D2003C9499 /* Street.swift in Sources */,
 				BA46CB432C1AFFD10062965B /* InformationType.swift in Sources */,
+				BA9EAE762C2337CD001227D2 /* HoursTableView.swift in Sources */,
 				BA403FC92C1E02FC003C23CE /* LightTime.swift in Sources */,
 				BABE800E2C1F5D56001E4395 /* Address.swift in Sources */,
 				BA3355702C1DD1BA003C9499 /* City.swift in Sources */,

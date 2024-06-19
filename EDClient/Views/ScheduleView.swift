@@ -11,6 +11,7 @@ struct ScheduleView: View {
     @State var schedule: Schedule = Schedule()
     @State var isScheduleFetched = false
     @State var addressInfo: Address
+    @State private var isLoading: Bool = true
 
     var body: some View {
         VStack {
@@ -24,67 +25,16 @@ struct ScheduleView: View {
                 )
             } else {
                 AddressInfoView(
-                    day: Date.now.description,
+                    day: Date.now.formatted(date: .abbreviated, time: .shortened),
                     queue: "Черга відсутня",
                     cityName: "Місто відстунє",
                     streetName: "Вулиця відстуня",
                     buildingNumber: "Номер будівлі відстуній"
                 )
             }
-            HStack {
-                Text("timeText")
-                    .frame(width: 160, height: 30)
-                    .padding(2)
-                    .background(Color.orange)
-                    .bold()
-                    .border(Color.gray)
-                Text("statusText")
-                    .frame(width: 160, height: 30)
-                    .padding(2)
-                    .background(Color.orange)
-                    .bold()
-                    .border(Color.gray)
-            }
-            ScrollView(.vertical) {
-                HStack {
-                    VStack(spacing: 2) {
-                        ForEach(schedule.Disconnections, id: \.Time) { lightTime in
-                            Text(lightTime.Time)
-                                .frame(width: 160, height: 30)
-                                .padding(2)
-                                .background(Color.gray.opacity(0.1))
-                                .clipShape(
-                                    RoundedRectangle(
-                                        cornerRadius: 8,
-                                        style: .continuous
-                                    )
-                                )
-                            
-                        }
-                    }
-                    
-                    VStack(spacing: 2) {
-                        ForEach(schedule.Disconnections, id: \.Time) { lightTime in
-                            if let statusImage = lightTime.Status.image {
-                                statusImage
-                                    .frame(width: 160, height: 30)
-                                    .padding(2)
-                                    .foregroundColor(electricityColor(status: lightTime.Status))
-                                    .background(electricityColor(status: lightTime.Status).opacity(0.1))
-                                    .clipShape(
-                                        RoundedRectangle(
-                                            cornerRadius: 8,
-                                            style: .continuous
-                                        )
-                                    )
-                                    
-                            }
-                            
-                        }
-                    }
-                }
-                .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-            }
+            
+            HoursTableView(schedule: schedule)
+            
             VStack {
                 Section {
                     Label(
@@ -94,9 +44,7 @@ struct ScheduleView: View {
                                 .monospaced()
                         },
                         icon: {
-                            Status.connected.image.foregroundStyle(
-                                electricityColor(status: Status.connected)
-                            )
+                            Status.connected.image.foregroundStyle(.green)
                         }
                     )
                     Label(
@@ -106,9 +54,7 @@ struct ScheduleView: View {
                                 .monospaced()
                         },
                         icon: {
-                            Status.posibleDisconnection.image.foregroundStyle(
-                                electricityColor(status: Status.posibleDisconnection)
-                            )
+                            Status.posibleDisconnection.image.foregroundStyle(.orange)
                         }
                     )
                     Label(
@@ -118,23 +64,29 @@ struct ScheduleView: View {
                                 .monospaced()
                         },
                         icon: {
-                            Status.disconnected.image.foregroundColor(
-                                electricityColor(status: Status.disconnected)
-                            )
+                            Status.disconnected.image?.foregroundStyle(.red)
                         }
                     )
                 }
                 .padding(1)
             }
             .shadow(color: .white.opacity(0.5), radius: 8)
-            
-                
+        }
+        .opacity(isLoading ? 0 : 1)
+        .overlay {
+            if isLoading {
+                ProgressView {
+                    Text("loading")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .progressViewStyle(.circular)
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             if schedule.isEmpty {
                 fetchSchedule()
-                isScheduleFetched.toggle()
             }
         }
         .padding()
@@ -143,6 +95,7 @@ struct ScheduleView: View {
     private func fetchSchedule() {
         Task {
             do {
+                isLoading = true
                 let schedule = try await Client.shared.getSchedule(
                     cityID: addressInfo.cityID,
                     streetID: addressInfo.streetID,
@@ -151,25 +104,15 @@ struct ScheduleView: View {
                 self.schedule.Date = schedule.Date
                 self.schedule.QueueName = schedule.QueueName
                 self.schedule.Disconnections = schedule.Disconnections
-                
-                
+                isLoading = false
+                isScheduleFetched = true
             } catch {
                 print("Error fetching schedule: \(error)")
-                
+                isLoading = true
             }
         }
     }
 
-    private func electricityColor(status: Status) -> Color {
-        switch status {
-        case .connected:
-            return .green
-        case .posibleDisconnection:
-            return .orange
-        case .disconnected:
-            return .red
-        }
-    }
 }
 
 #Preview {
@@ -181,5 +124,5 @@ struct ScheduleView: View {
             LightTime(time: "01:00", status: Status(rawValue: 1) ?? .connected),
             LightTime(time: "02:00", status: Status(rawValue: 0) ?? .connected)
         ]
-    ), addressInfo: PinnedAddress(cityName: "місто Немирів", streetName: "вулиця Горького", buildingNumber: "50", cityID: 523010100, streetID: 13366, buildingID: 270424) as Address)
+    ), addressInfo: PinnedAddress(cityName: "м. Немирів", streetName: "вулиця Горького", buildingNumber: "50", cityID: 523010100, streetID: 13366, buildingID: 270424) as Address)
 }

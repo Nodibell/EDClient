@@ -38,5 +38,5 @@ struct PinnedAddressItemView: View {
 }
 
 #Preview {
-    PinnedAddressItemView(pinnedAddress: PinnedAddress.init(cityName: "місто Вінниця(Вінницький район/м. Вінниця)", streetName: "вулиця Соборна", buildingNumber: "29", cityID: 1, streetID: 1, buildingID: 1))
+    PinnedAddressItemView(pinnedAddress: PinnedAddress.init(cityName: "м. Вінниця(Вінницький район/м. Вінниця)", streetName: "вулиця Соборна", buildingNumber: "29", cityID: 1, streetID: 1, buildingID: 1))
 }

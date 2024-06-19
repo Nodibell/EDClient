@@ -10,7 +10,7 @@ import SwiftUI
 struct MainView: View {
     @State private var isShowingForm = false
     @State private var pinnedAddresses: [PinnedAddress] = []
-    
+    @State private var rotation: Double = 0
     var body: some View {
         VStack {
             NavigationStack {
@@ -27,7 +27,7 @@ struct MainView: View {
                             .onDelete { offset in
                                 pinnedAddresses.remove(atOffsets: offset)
                             }
-                        }.listStyle(.grouped)
+                        }.listStyle(.inset)
                         
                         
                     } else {
@@ -35,18 +35,28 @@ struct MainView: View {
                     }
                 }
                 .navigationTitle("pinnedAddressesTitle")
-            }
             
             
-            VStack {
+            
+            
                 Button(action: {
                     isShowingForm.toggle()
                 }) {
                     Text("getScheduleText")
                         .font(.title2)
                         .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
+                        .background(
+                            AngularGradient(
+                                gradient: Gradient(colors:
+                                                    [.orange, .pink, .indigo, .purple, .orange.opacity(3)]
+                                                  ),
+                                center: .center,
+                                startAngle: .degrees(rotation),
+                                endAngle: .degrees(rotation + 360)
+                            ).blur(radius: 4, opaque: false)
+                                .animation(Animation.linear(duration: 20).repeatForever(autoreverses: false), value: rotation)
+                        )
                         .cornerRadius(10)
                 }
                 .padding()
