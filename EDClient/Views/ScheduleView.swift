@@ -16,8 +16,8 @@ struct ScheduleView: View {
         VStack {
             if isScheduleFetched {
                 AddressInfoView(
-                    day: schedule.day,
-                    queue: schedule.queue ?? "Черга відсутня",
+                    day: schedule.Date,
+                    queue: schedule.QueueName ?? "Черга відсутня",
                     cityName: addressInfo.cityName,
                     streetName: addressInfo.streetName,
                     buildingNumber: addressInfo.buildingNumber
@@ -48,8 +48,8 @@ struct ScheduleView: View {
             ScrollView(.vertical) {
                 HStack {
                     VStack(spacing: 2) {
-                        ForEach(schedule.lightTimes, id: \.time) { lightTime in
-                            Text(lightTime.time)
+                        ForEach(schedule.Disconnections, id: \.Time) { lightTime in
+                            Text(lightTime.Time)
                                 .frame(width: 160, height: 30)
                                 .padding(2)
                                 .background(Color.gray.opacity(0.1))
@@ -64,13 +64,13 @@ struct ScheduleView: View {
                     }
                     
                     VStack(spacing: 2) {
-                        ForEach(schedule.lightTimes, id: \.time) { lightTime in
-                            if let statusImage = lightTime.status.image {
+                        ForEach(schedule.Disconnections, id: \.Time) { lightTime in
+                            if let statusImage = lightTime.Status.image {
                                 statusImage
                                     .frame(width: 160, height: 30)
                                     .padding(2)
-                                    .foregroundColor(electricityColor(status: lightTime.status))
-                                    .background(electricityColor(status: lightTime.status).opacity(0.1))
+                                    .foregroundColor(electricityColor(status: lightTime.Status))
+                                    .background(electricityColor(status: lightTime.Status).opacity(0.1))
                                     .clipShape(
                                         RoundedRectangle(
                                             cornerRadius: 8,
@@ -148,9 +148,9 @@ struct ScheduleView: View {
                     streetID: addressInfo.streetID,
                     buildingID: addressInfo.buildingID
                 )
-                self.schedule.day = schedule.day
-                self.schedule.queue = schedule.queue
-                self.schedule.lightTimes = schedule.lightTimes
+                self.schedule.Date = schedule.Date
+                self.schedule.QueueName = schedule.QueueName
+                self.schedule.Disconnections = schedule.Disconnections
                 
                 
             } catch {
@@ -174,9 +174,9 @@ struct ScheduleView: View {
 
 #Preview {
     ScheduleView(schedule: Schedule(
-        queue: "Черга 4.1",
-        day: "Пт 20.06",
-        lightTimes: [
+        QueueName: "Черга 4.1",
+        Date: "Пт 20.06",
+        Disconnections: [
             LightTime(time: "00:00", status: Status(rawValue: 2) ?? .connected),
             LightTime(time: "01:00", status: Status(rawValue: 1) ?? .connected),
             LightTime(time: "02:00", status: Status(rawValue: 0) ?? .connected)

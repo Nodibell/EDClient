@@ -9,26 +9,26 @@ import Foundation
 
 struct Schedule: Decodable, CustomStringConvertible {
     var description: String {
-        "(queue: \(String(describing: queue)), day: \(day), lightTimes: \(lightTimes.description))"
+        "(queue: \(String(describing: QueueName)), day: \(Date), lightTimes: \(Disconnections.description))"
     }
     
-    var queue: String?
-    var day: String
-    var lightTimes: [LightTime]
+    var QueueName: String?
+    var Date: String
+    var Disconnections: [LightTime]
     
     var isEmpty: Bool {
-        queue!.isEmpty && day.isEmpty && lightTimes.isEmpty
+        QueueName!.isEmpty && Date.isEmpty && Disconnections.isEmpty
     }
     
-    init(queue: String, day: String, lightTimes: [LightTime]) {
-        self.queue = queue
-        self.day = day
-        self.lightTimes = lightTimes
+    init(QueueName: String, Date: String, Disconnections: [LightTime]) {
+        self.QueueName = QueueName
+        self.Date = Date
+        self.Disconnections = Disconnections
     }
     
     init() {
-        self.queue = ""
-        self.day = ""
-        self.lightTimes = []
+        self.QueueName = ""
+        self.Date = ""
+        self.Disconnections = []
     }
 }

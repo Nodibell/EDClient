@@ -9,19 +9,19 @@ import Foundation
 
 struct LightTime: Decodable, CustomStringConvertible {
     var description: String {
-        "(time: \(time), status: \(status))"
+        "(time: \(Time), status: \(Status))"
     }
     
-    let time: String
-    let status: Status
+    let Time: String
+    let Status: Status
     
     init(time: String, status: Status) {
-        self.time = time
-        self.status = status
+        self.Time = time
+        self.Status = status
     }
     
     init() {
-        self.time = ""
-        self.status = .connected
+        self.Time = ""
+        self.Status = .connected
     }
 }

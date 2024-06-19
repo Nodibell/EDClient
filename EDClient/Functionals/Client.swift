@@ -34,7 +34,7 @@ class Client {
                     case let .failure(error):
                         continuation.resume(throwing: error)
                     }
-                }
+            }
         }
     }
 
@@ -42,11 +42,14 @@ class Client {
     private func providePromptURL(for promptType: InformationType, id: Int = -1, search: String) -> URL? {
         switch promptType {
         case .city:
-            return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/citiesFetch.php?value=\(search)")
+            //return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/citiesFetch.php?value=\(search)")
+            return URL(string: "http://localhost:5062/api/Address/City?query=\(search)")
         case .street:
-            return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/streetsFetch.php?code=\(id)&search=\(search)")
+            //return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/streetsFetch.php?code=\(id)&search=\(search)")
+            return URL(string: "http://localhost:5062/api/Address/Street?cityId=\(id)&nameOfStreet=\(search)")
         case .building:
             return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/buildingsFetch.php?id=\(id)&search=\(search)")
+            //return URL(string: "http://localhost:5062/api/Address/HouseNumber?streetId=\(id)&numberOfBuild=\(search)")
         }
     }
     
@@ -81,6 +84,7 @@ class Client {
     
     private func provideScheduleURL(cityID: Int, streetID: Int, buildingID: Int) -> URL? {
         return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs//disconnection.php?cityId=\(cityID)&streetId=\(streetID)&buildingId=\(buildingID)")
+        //return URL(string: "http://localhost:5062/api/Disconnections?cityId=\(cityID)&streetId=\(streetID)&numberOfHouseId=\(buildingID)")
     }
     
     
