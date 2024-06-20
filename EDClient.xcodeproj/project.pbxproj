@@ -27,6 +27,7 @@
 		BA46CB492C1B11540062965B /* FormAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA46CB482C1B11540062965B /* FormAddress.swift */; };
 		BA46CB4B2C1C382B0062965B /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA46CB4A2C1C382B0062965B /* Status.swift */; };
 		BA9EAE762C2337CD001227D2 /* HoursTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EAE752C2337CD001227D2 /* HoursTableView.swift */; };
+		BA9EAE782C242C0A001227D2 /* SpecifiedDateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EAE772C242C0A001227D2 /* SpecifiedDateFormat.swift */; };
 		BAA3190D2C2200D9005469D9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BAA3190C2C2200D9005469D9 /* Alamofire */; };
 		BABE80082C1F3B9E001E4395 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE80072C1F3B9E001E4395 /* MainView.swift */; };
 		BABE800A2C1F3FF0001E4395 /* PinnedAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE80092C1F3FF0001E4395 /* PinnedAddress.swift */; };
@@ -60,6 +61,7 @@
 		BA46CB482C1B11540062965B /* FormAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormAddress.swift; sourceTree = "<group>"; };
 		BA46CB4A2C1C382B0062965B /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		BA9EAE752C2337CD001227D2 /* HoursTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursTableView.swift; sourceTree = "<group>"; };
+		BA9EAE772C242C0A001227D2 /* SpecifiedDateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecifiedDateFormat.swift; sourceTree = "<group>"; };
 		BABE80072C1F3B9E001E4395 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		BABE80092C1F3FF0001E4395 /* PinnedAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedAddress.swift; sourceTree = "<group>"; };
 		BABE800D2C1F5D56001E4395 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 			children = (
 				BA46CB382C1AEBF70062965B /* Client.swift */,
 				BAC20CAB2C1CB7CC00BE8AD5 /* InternetChecker.swift */,
+				BA9EAE772C242C0A001227D2 /* SpecifiedDateFormat.swift */,
 			);
 			path = Functionals;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				BA403FC92C1E02FC003C23CE /* LightTime.swift in Sources */,
 				BABE800E2C1F5D56001E4395 /* Address.swift in Sources */,
 				BA3355702C1DD1BA003C9499 /* City.swift in Sources */,
+				BA9EAE782C242C0A001227D2 /* SpecifiedDateFormat.swift in Sources */,
 				BA46CB282C1AE97E0062965B /* EDClientApp.swift in Sources */,
 				BA403FD22C1E17BB003C23CE /* AddressInfoView.swift in Sources */,
 				BABE80112C206188001E4395 /* PinnedAddressItemView.swift in Sources */,

@@ -25,3 +25,5 @@
 "pinnedAddressesTitle" = "Pinned addresses";
 "timeText" = "Time";
 "statusText" = "Status";
+"noQueueScheduleView" = "No queue was found";
+"noAddressInfoView" = "No information about your needed adddress was found";

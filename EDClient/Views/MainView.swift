@@ -10,7 +10,7 @@ import SwiftUI
 struct MainView: View {
     @State private var isShowingForm = false
     @State private var pinnedAddresses: [PinnedAddress] = []
-    @State private var rotation: Double = 0
+    
     var body: some View {
         VStack {
             NavigationStack {
@@ -25,6 +25,7 @@ struct MainView: View {
                                 }
                             }
                             .onDelete { offset in
+                                // needs realization through the client and server
                                 pinnedAddresses.remove(atOffsets: offset)
                             }
                         }.listStyle(.inset)
@@ -35,10 +36,10 @@ struct MainView: View {
                     }
                 }
                 .navigationTitle("pinnedAddressesTitle")
-            
-            
-            
-            
+                
+                
+                
+                
                 Button(action: {
                     isShowingForm.toggle()
                 }) {
@@ -46,20 +47,22 @@ struct MainView: View {
                         .font(.title2)
                         .padding()
                         .foregroundStyle(.white)
-                        .background(
+                        .background(TimelineView(.animation) { timeline in
+                            let now = timeline.date.timeIntervalSinceReferenceDate
+                            let angle = Angle.degrees(now.truncatingRemainder(dividingBy: 20) * 18)
                             AngularGradient(
-                                gradient: Gradient(colors:
-                                                    [.orange, .pink, .indigo, .purple, .orange.opacity(3)]
-                                                  ),
+                                gradient: Gradient(colors: [.orange, .pink, .indigo, .purple, .orange.opacity(3)]),
                                 center: .center,
-                                startAngle: .degrees(rotation),
-                                endAngle: .degrees(rotation + 360)
-                            ).blur(radius: 4, opaque: false)
-                                .animation(Animation.linear(duration: 20).repeatForever(autoreverses: false), value: rotation)
+                                startAngle: .degrees(angle.degrees),
+                                endAngle: .degrees(angle.degrees + 360)
+                            )
+                            .blur(radius: 4, opaque: false)
+                        })
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
                         )
-                        .cornerRadius(10)
+                        .padding()
                 }
-                .padding()
             }
             .sheet(isPresented: $isShowingForm) {
                 AddressChoosingView()

@@ -15,7 +15,7 @@ struct PinnedAddressItemView: View {
             Image(systemName: "house.circle.fill")
                 .font(.largeTitle)
                 .symbolRenderingMode(.palette)
-                .foregroundStyle(.yellow, .blue)
+                .foregroundStyle(Gradient(colors: [.orange, .yellow, .orange]).colorSpace(.perceptual), .indigo)
                 
             VStack{
                 HStack {

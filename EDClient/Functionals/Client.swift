@@ -10,7 +10,6 @@ import Alamofire
 import UIKit
 
 class Client {
-    
     public static let shared = Client()
     
     private init () {}
@@ -42,14 +41,14 @@ class Client {
     private func providePromptURL(for promptType: InformationType, id: Int = -1, search: String) -> URL? {
         switch promptType {
         case .city:
-            return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/citiesFetch.php?value=\(search)")
-            //return URL(string: "http://localhost:5062/api/Address/City?query=\(search)")
+            //return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/citiesFetch.php?value=\(search)")
+            return URL(string: "http://localhost:5062/api/Address/City?query=\(search)")
         case .street:
-            return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/streetsFetch.php?code=\(id)&search=\(search)")
-            //return URL(string: "http://localhost:5062/api/Address/Street?cityId=\(id)&nameOfStreet=\(search)")
+            //return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/streetsFetch.php?code=\(id)&search=\(search)")
+            return URL(string: "http://localhost:5062/api/Address/Street?cityId=\(id)&nameOfStreet=\(search)")
         case .building:
-            return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/buildingsFetch.php?id=\(id)&search=\(search)")
-            //return URL(string: "http://localhost:5062/api/Address/HouseNumber?streetId=\(id)&numberOfBuild=\(search)")
+            //return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/buildingsFetch.php?id=\(id)&search=\(search)")
+            return URL(string: "http://localhost:5062/api/Address/HouseNumber?streetId=\(id)&numberOfBuild=\(search)")
         }
     }
     
@@ -88,13 +87,36 @@ class Client {
     }
     
     // input: uuid: String
-    func getPinnedAddresses() -> [PinnedAddress] {
-        if let uuid = UIDevice.current.identifierForVendor?.uuidString {
-            if let url = providePinnedAddressesURL(uiid: uuid) {
-                print("Geting from \(url) Pinned Addresses")
-            }
+    func getPinnedAddresses() async throws -> [PinnedAddress] {
+        /*
+        guard let uuid = await UIDevice.current.identifierForVendor?.uuidString else {
+            return []
         }
-        print("returned Pinned Addresses")
+        guard let url = providePinnedAddressesURL(uiid: uuid) else {
+            return []
+        }
+        do {
+            return try await withCheckedThrowingContinuation { continuation in
+                AF.request(url)
+                    .responseData { response in
+                        switch response.result {
+                        case let .success(data):
+                            do {
+                                let pinnedAddresses = try JSONDecoder().decode([PinnedAddress].self, from: data)
+                                continuation.resume(returning: pinnedAddresses)
+                            } catch {
+                                continuation.resume(throwing: error)
+                            }
+                        case let .failure(error):
+                            continuation.resume(throwing: error)
+                        }
+                    }
+            }
+        } catch {
+            print("Error fetching or decoding schedule: \(error)")
+            return []
+        }
+        */
         return [
             PinnedAddress(cityName: "м. Вінниця", streetName: "вулиця Соборна", buildingNumber: "21", cityID: 0, streetID: 0, buildingID: 0),
             PinnedAddress(cityName: "м. Київ", streetName: "вулиця Київська", buildingNumber: "42", cityID: 1, streetID: 1, buildingID: 1),
@@ -104,9 +126,30 @@ class Client {
         ]
     }
     
-    func postPinnedAddress(uiid: String, ulr: String) {
-        
+    func postPinnedAddress(addressInfo: PinnedAddress) async {
+        guard let uuid = await UIDevice.current.identifierForVendor?.uuidString else {
+            return
+        }
+        print(uuid.description, addressInfo.description)
     }
+    
+    func isPinnedAddress(addressInfo: PinnedAddress) async -> Bool? {
+        do {
+            let pinnedAddresses = try await getPinnedAddresses()
+            if !pinnedAddresses.isEmpty {
+                return pinnedAddresses.contains { pinnedAddress in
+                    pinnedAddress == addressInfo
+                }
+            } else {
+                return nil
+            }
+        } catch {
+            print("Failled to get info about pinned address")
+            return nil
+        }
+    }
+    
+
     
     private func providePinnedAddressesURL(uiid: String) -> URL? {
         return URL(string: "http://localhost:5062/api/PinnedAddresses?DeviceID=\(uiid)")

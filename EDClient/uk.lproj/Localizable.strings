@@ -25,4 +25,6 @@
 "pinnedAddressesTitle" = "Закріплені адреси";
 "timeText" = "Час";
 "statusText" = "Статус";
+"noQueueScheduleView" = "Черга відсутня";
+"noAddressInfoView" = "Жодної інформації про потрібну вам адресу не було знайдено";
 

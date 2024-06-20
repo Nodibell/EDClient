@@ -12,24 +12,26 @@ struct ScheduleView: View {
     @State var isScheduleFetched = false
     @State var addressInfo: Address
     @State private var isLoading: Bool = true
-
+    @State private var isPinned: Bool?
+    
     var body: some View {
         VStack {
-            if isScheduleFetched {
+            if isScheduleFetched && !schedule.isEmpty {
                 AddressInfoView(
-                    day: schedule.Date,
-                    queue: schedule.QueueName ?? "Черга відсутня",
+                    date: schedule.date,
+                    queue: schedule.queueName ?? NSLocalizedString("noQueueScheduleView", comment: ""),
                     cityName: addressInfo.cityName,
                     streetName: addressInfo.streetName,
                     buildingNumber: addressInfo.buildingNumber
                 )
             } else {
                 AddressInfoView(
-                    day: Date.now.formatted(date: .abbreviated, time: .shortened),
-                    queue: "Черга відсутня",
-                    cityName: "Місто відстунє",
-                    streetName: "Вулиця відстуня",
-                    buildingNumber: "Номер будівлі відстуній"
+                    date: SpecifiedDateFormat.shared.todayDate,
+                    queue: NSLocalizedString("noQueueScheduleView", comment: ""),
+                    cityName: "",
+                    streetName: "",
+                    buildingNumber: "",
+                    noAddressInfo: NSLocalizedString("noAddressInfoView", comment: "")
                 )
             }
             
@@ -72,6 +74,23 @@ struct ScheduleView: View {
             }
             .shadow(color: .white.opacity(0.5), radius: 8)
         }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                if let isPinned = isPinned {
+                    Button(action: {
+                        Task {
+                            if isPinned {
+                                await unpinAddress()
+                            } else {
+                                await pinAddress()
+                            }
+                        }
+                    }) {
+                        Label("Pin Address", systemImage: isPinned ? "pin.slash.fill" : "pin.fill").animation(.easeInOut, value: isPinned)
+                    }
+                }
+            }
+        }
         .opacity(isLoading ? 0 : 1)
         .overlay {
             if isLoading {
@@ -85,9 +104,8 @@ struct ScheduleView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            if schedule.isEmpty {
-                fetchSchedule()
-            }
+            checkIfPinned()
+            fetchSchedule()
         }
         .padding()
     }
@@ -96,14 +114,15 @@ struct ScheduleView: View {
         Task {
             do {
                 isLoading = true
+                isScheduleFetched = false
                 let schedule = try await Client.shared.getSchedule(
                     cityID: addressInfo.cityID,
                     streetID: addressInfo.streetID,
                     buildingID: addressInfo.buildingID
                 )
-                self.schedule.Date = schedule.Date
-                self.schedule.QueueName = schedule.QueueName
-                self.schedule.Disconnections = schedule.Disconnections
+                self.schedule.date = schedule.date
+                self.schedule.queueName = schedule.queueName
+                self.schedule.disconnections = schedule.disconnections
                 isLoading = false
                 isScheduleFetched = true
             } catch {
@@ -112,14 +131,38 @@ struct ScheduleView: View {
             }
         }
     }
-
+    
+    private func pinAddress() async {
+        guard let isPinned = isPinned else {
+            return
+        }
+        if !isPinned {
+            await Client.shared.postPinnedAddress(addressInfo: addressInfo as! PinnedAddress)
+        }
+        
+        print("Address Pinned")
+    }
+    
+    private func unpinAddress() async {
+        
+    }
+    
+    private func checkIfPinned() {
+        Task {
+            isPinned = await Client.shared.isPinnedAddress(
+                addressInfo: addressInfo.self is FormAddress
+                ? PinnedAddress(formAddress: addressInfo as! FormAddress)
+                : addressInfo as! PinnedAddress
+            )
+        }
+    }
 }
 
 #Preview {
     ScheduleView(schedule: Schedule(
-        QueueName: "Черга 4.1",
-        Date: "Пт 20.06",
-        Disconnections: [
+        queueName: "Черга 4.1",
+        date: "Пт 20.06",
+        disconnections: [
             LightTime(time: "00:00", status: Status(rawValue: 2) ?? .connected),
             LightTime(time: "01:00", status: Status(rawValue: 1) ?? .connected),
             LightTime(time: "02:00", status: Status(rawValue: 0) ?? .connected)
