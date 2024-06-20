@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct HoursTableView: View {
-    @State var schedule: Schedule
+    @Binding var isScheduleFetched: Bool
+    @Binding var schedule: Schedule
     
     var body: some View {
         VStack {
@@ -30,7 +31,7 @@ struct HoursTableView: View {
                 HStack {
                     VStack(spacing: 2) {
                         ForEach(schedule.disconnections, id: \.time) { lightTime in
-                            Text(lightTime.time)
+                            Text(SpecifiedDateFormat.shared.formatTime(time: lightTime.time) ?? NSLocalizedString("error", comment: ""))
                                 .frame(width: 160, height: 30)
                                 .padding(2)
                                 .background(Color.gray.opacity(0.1))
@@ -46,12 +47,12 @@ struct HoursTableView: View {
                     
                     VStack(spacing: 2) {
                         ForEach(schedule.disconnections, id: \.time) { lightTime in
-                            if let statusImage = lightTime.status.image {
+                            if let statusImage = lightTime.status?.image {
                                 statusImage
                                     .frame(width: 160, height: 30)
                                     .padding(2)
-                                    .foregroundColor(electricityColor(status: lightTime.status))
-                                    .background(electricityColor(status: lightTime.status).opacity(0.1))
+                                    .foregroundStyle(electricityColor(status: lightTime.status ?? .posibleDisconnection))
+                                    .background(electricityColor(status: lightTime.status ?? .posibleDisconnection).opacity(0.1))
                                     .clipShape(
                                         RoundedRectangle(
                                             cornerRadius: 8,
@@ -66,7 +67,8 @@ struct HoursTableView: View {
                 .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
             }
         }.onAppear {
-            if schedule.disconnections.isEmpty {
+            print("Tables: ",schedule.disconnections.description)
+            if schedule.disconnections.isEmpty && isScheduleFetched {
                 fillScheduleWithUnknown()
             }
         }
@@ -100,13 +102,15 @@ struct HoursTableView: View {
 }
 
 #Preview {
-    HoursTableView(schedule: Schedule(
-        queueName: "Черга 4.1",
-        date: "Пт 20.06",
-        disconnections: [
-            LightTime(time: "00:00", status: Status(rawValue: 2) ?? .connected),
-            LightTime(time: "01:00", status: Status(rawValue: 1) ?? .connected),
-            LightTime(time: "02:00", status: Status(rawValue: 0) ?? .connected)
-        ]
-    ))
+    HoursTableView(isScheduleFetched: .constant(true), schedule: .constant(
+        Schedule(
+            queueName: "Черга 4.1",
+            date: "Пт 20.06",
+            disconnections: [
+                LightTime(time: "00:00", status: Status(rawValue: 2) ?? .connected),
+                LightTime(time: "01:00", status: Status(rawValue: 1) ?? .connected),
+                LightTime(time: "02:00", status: Status(rawValue: 0) ?? .connected)
+            ]
+        ))
+    )
 }

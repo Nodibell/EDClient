@@ -9,11 +9,11 @@ import Foundation
 
 struct LightTime: Decodable, CustomStringConvertible {
     var description: String {
-        "(time: \(time), status: \(status))"
+        "(time: \(String(describing: time)), status: \(String(describing: status)))"
     }
     
-    let time: String
-    let status: Status
+    let time: String?
+    let status: Status?
     
     init(time: String, status: Status) {
         self.time = time

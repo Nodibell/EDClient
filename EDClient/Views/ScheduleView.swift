@@ -18,8 +18,8 @@ struct ScheduleView: View {
         VStack {
             if isScheduleFetched && !schedule.isEmpty {
                 AddressInfoView(
-                    date: schedule.date,
-                    queue: schedule.queueName ?? NSLocalizedString("noQueueScheduleView", comment: ""),
+                    date: SpecifiedDateFormat.shared.formatDay(day: schedule.date) ?? SpecifiedDateFormat.shared.todayDate,
+                    queueName: schedule.queueName ?? NSLocalizedString("noQueueScheduleView", comment: ""),
                     cityName: addressInfo.cityName,
                     streetName: addressInfo.streetName,
                     buildingNumber: addressInfo.buildingNumber
@@ -27,7 +27,7 @@ struct ScheduleView: View {
             } else {
                 AddressInfoView(
                     date: SpecifiedDateFormat.shared.todayDate,
-                    queue: NSLocalizedString("noQueueScheduleView", comment: ""),
+                    queueName: NSLocalizedString("noQueueScheduleView", comment: ""),
                     cityName: "",
                     streetName: "",
                     buildingNumber: "",
@@ -35,7 +35,7 @@ struct ScheduleView: View {
                 )
             }
             
-            HoursTableView(schedule: schedule)
+            HoursTableView(isScheduleFetched: $isScheduleFetched, schedule: $schedule)
             
             VStack {
                 Section {
@@ -137,7 +137,7 @@ struct ScheduleView: View {
             return
         }
         if !isPinned {
-            await Client.shared.postPinnedAddress(addressInfo: addressInfo as! PinnedAddress)
+            //await Client.shared.postPinnedAddress(addressInfo: addressInfo as! PinnedAddress)
         }
         
         print("Address Pinned")

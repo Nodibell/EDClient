@@ -7,7 +7,7 @@
 */
 
 "fullAddress" = "Full address";
-"scheduleFor" = "Online schedule of hourly blackouts";
+"scheduleFor" = "Online schedule of hourly blackouts for";
 "confirmationButton" = "Confirm";
 "City" = "City";
 "Street" = "Street";
@@ -27,3 +27,4 @@
 "statusText" = "Status";
 "noQueueScheduleView" = "No queue was found";
 "noAddressInfoView" = "No information about your needed adddress was found";
+"error" = "Error";

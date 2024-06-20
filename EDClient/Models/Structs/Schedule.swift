@@ -9,15 +9,15 @@ import Foundation
 
 struct Schedule: Decodable, CustomStringConvertible {
     var description: String {
-        "(queue: \(String(describing: queueName)), day: \(date), lightTimes: \(disconnections.description))"
+        "(queueName: \(String(describing: queueName)), date: \(String(describing: date?.description)), disconnections: \(disconnections.description))"
     }
     
     var queueName: String?
-    var date: String
+    var date: String?
     var disconnections: [LightTime]
     
     var isEmpty: Bool {
-        queueName!.isEmpty && date.isEmpty && disconnections.isEmpty
+        queueName?.isEmpty ?? true && date?.isEmpty ?? true  && disconnections.isEmpty
     }
     
     init(queueName: String, date: String, disconnections: [LightTime]) {

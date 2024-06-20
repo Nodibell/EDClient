@@ -65,7 +65,16 @@ struct MainView: View {
                 }
             }
             .sheet(isPresented: $isShowingForm) {
-                AddressChoosingView()
+                VStack {
+                    Image(systemName: "chevron.compact.down")
+                        .resizable()
+                        .symbolEffect(.scale)
+                        .frame(width: 36, height: 12)
+                        .foregroundStyle(Gradient(colors: [.indigo, .purple]))
+                        .padding(EdgeInsets(top: 20, leading: 1, bottom: 1, trailing: 1))
+                    AddressChoosingView()
+                        
+                }
             }
             .onAppear {
                 fetchPinnedAddresses()

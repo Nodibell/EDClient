@@ -27,4 +27,4 @@
 "statusText" = "Статус";
 "noQueueScheduleView" = "Черга відсутня";
 "noAddressInfoView" = "Жодної інформації про потрібну вам адресу не було знайдено";
-
+"error" = "Помилка";

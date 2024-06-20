@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddressInfoView: View {
     var date: String
-    var queue: String
+    var queueName: String
     var cityName: String
     var streetName: String
     var buildingNumber: String
@@ -53,7 +53,7 @@ struct AddressInfoView: View {
                     .shadow(color: .white.opacity(0.5), radius: 8)
                 
                 
-                Text(queue)
+                Text(queueName)
                     .font(.headline)
                     .bold()
                     .foregroundColor(.white)
@@ -71,7 +71,7 @@ struct AddressInfoView: View {
                     .font(.caption)
                     .lineLimit(10)
                     .padding(.horizontal, 8)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
                     .font(.headline)
                     .italic()
@@ -103,5 +103,5 @@ struct AddressInfoView: View {
 }
 
 #Preview {
-    AddressInfoView(date: "Пт 21.06", queue: "Черга 3.1", cityName: "м. Вінниця", streetName: "вулиця Соборна", buildingNumber: "23")
+    AddressInfoView(date: "Пт 21.06", queueName: "Черга 3.1", cityName: "м. Вінниця", streetName: "вулиця Соборна", buildingNumber: "23")
 }

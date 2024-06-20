@@ -44,14 +44,19 @@ struct AddressChoosingView: View {
                     Text("scheduleFor")
                 }
                 
-                NavigationLink {
-                    ScheduleView(addressInfo: addressInfo as Address)
-                } label: {
-                    Text("confirmationButton")
-                }
-                .disabled(checkDisabled())
+                    NavigationLink {
+                        ScheduleView(addressInfo: addressInfo as Address)
+                    } label: {
+                        Text("confirmationButton")
+                            .bold()
+                    }
+                    .listRowBackground(!checkDisabled() ? Color.green : Color(.quaternarySystemFill))
+                    .foregroundStyle(!checkDisabled() ? .white : .secondary)
+                    .disabled(checkDisabled())
+                
             }
-            .navigationTitle(LocalizedStringKey("scheduleFormTitle"))
+            .listSectionSpacing(10)
+            .navigationTitle(Text("scheduleFormTitle"))
         }
         .onAppear {
             addressInfo.makeEmpty()
