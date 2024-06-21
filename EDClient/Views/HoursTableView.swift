@@ -51,8 +51,8 @@ struct HoursTableView: View {
                                 statusImage
                                     .frame(width: 160, height: 30)
                                     .padding(2)
-                                    .foregroundStyle(electricityColor(status: lightTime.status ?? .posibleDisconnection))
-                                    .background(electricityColor(status: lightTime.status ?? .posibleDisconnection).opacity(0.1))
+                                    .foregroundStyle(electricityColor(status: lightTime.status ?? .possibleDisconnection))
+                                    .background(electricityColor(status: lightTime.status ?? .possibleDisconnection).opacity(0.1))
                                     .clipShape(
                                         RoundedRectangle(
                                             cornerRadius: 8,
@@ -79,11 +79,11 @@ struct HoursTableView: View {
         for i in 0...23 {
             if i > 9 {
                 schedule.disconnections.append(
-                    LightTime(time: "\(i):00", status: .posibleDisconnection)
+                    LightTime(time: "\(i):00", status: .possibleDisconnection)
                 )
             } else {
                 schedule.disconnections.append(
-                    LightTime(time: "0\(i):00", status: .posibleDisconnection)
+                    LightTime(time: "0\(i):00", status: .possibleDisconnection)
                 )
             }
         }
@@ -93,7 +93,7 @@ struct HoursTableView: View {
         switch status {
         case .connected:
             return .green
-        case .posibleDisconnection:
+        case .possibleDisconnection:
             return .orange
         case .disconnected:
             return .red
@@ -107,9 +107,9 @@ struct HoursTableView: View {
             queueName: "Черга 4.1",
             date: "Пт 20.06",
             disconnections: [
-                LightTime(time: "00:00", status: Status(rawValue: 2) ?? .connected),
-                LightTime(time: "01:00", status: Status(rawValue: 1) ?? .connected),
-                LightTime(time: "02:00", status: Status(rawValue: 0) ?? .connected)
+                LightTime(time: "00:00", status: .connected),
+                          LightTime(time: "01:00", status: .possibleDisconnection),
+                          LightTime(time: "02:00", status: .disconnected)
             ]
         ))
     )

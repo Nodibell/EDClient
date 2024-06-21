@@ -56,7 +56,7 @@ struct ScheduleView: View {
                                 .monospaced()
                         },
                         icon: {
-                            Status.posibleDisconnection.image.foregroundStyle(.orange)
+                            Status.possibleDisconnection.image.foregroundStyle(.orange)
                         }
                     )
                     Label(
@@ -163,9 +163,9 @@ struct ScheduleView: View {
         queueName: "Черга 4.1",
         date: "Пт 20.06",
         disconnections: [
-            LightTime(time: "00:00", status: Status(rawValue: 2) ?? .connected),
-            LightTime(time: "01:00", status: Status(rawValue: 1) ?? .connected),
-            LightTime(time: "02:00", status: Status(rawValue: 0) ?? .connected)
+            LightTime(time: "00:00", status: .connected),
+            LightTime(time: "01:00", status: .possibleDisconnection),
+            LightTime(time: "02:00", status: .disconnected)
         ]
     ), addressInfo: PinnedAddress(cityName: "м. Немирів", streetName: "вулиця Горького", buildingNumber: "50", cityID: 523010100, streetID: 13366, buildingID: 270424) as Address)
 }

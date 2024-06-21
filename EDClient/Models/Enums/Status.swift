@@ -8,16 +8,16 @@
 import Foundation
 import SwiftUI
 
-enum Status: Int, Decodable, Hashable {
-    case disconnected = 0
-    case posibleDisconnection = 1
-    case connected = 2
+enum Status: String, Decodable, Hashable {
+    case disconnected = "disconnected"
+    case possibleDisconnection = "possibleDisconnection"
+    case connected = "connected"
     
     var image: Image? {
         switch self {
         case .disconnected:
             return Image(systemName: "bolt.slash")
-        case .posibleDisconnection:
+        case .possibleDisconnection:
             return Image(systemName: "bolt.trianglebadge.exclamationmark.fill")
         case .connected:
             return Image(systemName: "bolt.fill")
