@@ -16,16 +16,44 @@ struct HoursTableView: View {
             HStack {
                 Text("timeText")
                     .frame(width: 160, height: 30)
+                    .foregroundStyle(.white)
                     .padding(2)
                     .background(Color.orange)
                     .bold()
-                    .border(Color.gray)
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: 8,
+                            style: .continuous
+                        )
+                    )
+                    .padding(2)
+                    .background(Color.accentColor)
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: 8,
+                            style: .continuous
+                        )
+                    )
                 Text("statusText")
                     .frame(width: 160, height: 30)
+                    .foregroundStyle(.white)
                     .padding(2)
                     .background(Color.orange)
                     .bold()
-                    .border(Color.gray)
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: 8,
+                            style: .continuous
+                        )
+                    )
+                    .padding(2)
+                    .background(Color.accentColor)
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: 8,
+                            style: .continuous
+                        )
+                    )
             }
             ScrollView(.vertical) {
                 HStack {
@@ -34,7 +62,9 @@ struct HoursTableView: View {
                             Text(SpecifiedDateFormat.shared.formatTime(time: lightTime.time) ?? NSLocalizedString("error", comment: ""))
                                 .frame(width: 160, height: 30)
                                 .padding(2)
-                                .background(Color.gray.opacity(0.1))
+                                .background(colorHours(
+                                    time: SpecifiedDateFormat.shared.toTimeDate(from: lightTime.time))
+                                )
                                 .clipShape(
                                     RoundedRectangle(
                                         cornerRadius: 8,
@@ -66,8 +96,8 @@ struct HoursTableView: View {
                 }
                 .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
             }
+            .defaultScrollAnchor(defaultScrollPoint())
         }.onAppear {
-            print("Tables: ",schedule.disconnections.description)
             if schedule.disconnections.isEmpty && isScheduleFetched {
                 fillScheduleWithUnknown()
             }
@@ -86,6 +116,39 @@ struct HoursTableView: View {
                     LightTime(time: "0\(i):00", status: .possibleDisconnection)
                 )
             }
+        }
+    }
+    
+    private func defaultScrollPoint() -> UnitPoint? {
+        let hour = SpecifiedDateFormat.shared.calendar.component(.hour, from: SpecifiedDateFormat.shared.now)
+        
+        switch hour.self {
+        case 0..<6:
+            return .top
+        case 6..<12:
+            return .topLeading
+        case 12..<18:
+            return .center
+        case 18..<21:
+            return .bottomLeading
+        case 21..<24:
+            return .bottom
+        default:
+            return nil
+        }
+    }
+    
+    private func colorHours(time: Date?) -> Color {
+        guard let time = time else {
+            return Color.gray.opacity(0.1)
+        }
+        
+        if SpecifiedDateFormat.shared.isAfterNow(time: time) ?? false {
+            return Color.orange.opacity(0.08)
+        } else if SpecifiedDateFormat.shared.isNow(time: time) ?? false {
+            return Color.orange.opacity(0.4)
+        } else {
+            return Color.gray.opacity(0.1)
         }
     }
     
