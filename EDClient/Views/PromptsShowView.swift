@@ -65,18 +65,17 @@ struct PromptsShowView: View {
                                 description: Text(
                                     LocalizedStringKey("3symbolsNeededDescriptionPromptsShowView"))
                             )
-                        } else {
+                        } else if promptType == .building && searchText.count == 0 {
                             ContentUnavailableView(
                                 LocalizedStringKey("startInputBuilding"),
                                 systemImage: "magnifyingglass",
                                 description: Text("inputBuildingDescription")
                             )
+                        } else {
+                            ContentUnavailableView.search
                         }
-                    } else if prompts.isEmpty && !isLoading {
-                        ContentUnavailableView.search
                     }
                 }
-                
             } else {
                 ContentUnavailableView.init("Connection Error", systemImage: "wifi.slash", description: Text("Failed to connect to the network"))
             }

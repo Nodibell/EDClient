@@ -144,9 +144,9 @@ struct HoursTableView: View {
         }
         
         if SpecifiedDateFormat.shared.isAfterNow(time: time) ?? false {
-            return Color.orange.opacity(0.08)
+            return Color.indigo.opacity(0.08)
         } else if SpecifiedDateFormat.shared.isNow(time: time) ?? false {
-            return Color.orange.opacity(0.4)
+            return Color.indigo.opacity(0.5)
         } else {
             return Color.gray.opacity(0.1)
         }

@@ -45,6 +45,7 @@ struct MainView: View {
                 }) {
                     Text("getScheduleText")
                         .font(.title2)
+                        .bold()
                         .padding()
                         .foregroundStyle(.white)
                         .background(TimelineView(.animation) { timeline in
@@ -71,10 +72,9 @@ struct MainView: View {
                         .symbolEffect(.scale)
                         .frame(width: 36, height: 12)
                         .foregroundStyle(Gradient(colors: [.indigo, .purple]))
-                        .padding(EdgeInsets(top: 20, leading: 1, bottom: 1, trailing: 1))
+                        .padding(EdgeInsets(top: 18, leading: 1, bottom: 0, trailing: 1))
                     AddressChoosingView()
-                        
-                }
+                }.background(Color(.secondarySystemBackground))
             }
             .onAppear {
                 fetchPinnedAddresses()
