@@ -104,22 +104,20 @@ struct HoursTableView: View {
     private func defaultScrollPoint() -> UnitPoint? {
         let hour = SpecifiedDateFormat.shared.calendar.component(.hour, from: SpecifiedDateFormat.shared.now)
         
-        switch hour.self {
+        switch hour {
         case 0..<6:
             return .top
         case 6..<12:
             return UnitPoint(
-                x: (UnitPoint.top.x + UnitPoint.center.x).remainder(dividingBy: 2),
-                y: (UnitPoint.top.y + UnitPoint.center.y).remainder(dividingBy: 2)
+                x: (UnitPoint.top.x + UnitPoint.center.x) / 2,
+                y: (UnitPoint.top.y + UnitPoint.center.y) / 2
             )
         case 12..<18:
-            return .center
-        case 18..<21:
             return UnitPoint(
-                x: (UnitPoint.center.x + UnitPoint.bottom.x).remainder(dividingBy: 2),
-                y: (UnitPoint.center.y + UnitPoint.bottom.y).remainder(dividingBy: 2)
+                x: (UnitPoint.center.x + UnitPoint.bottom.x) / 2,
+                y: (UnitPoint.center.y + UnitPoint.bottom.y) / 2
             )
-        case 21..<24:
+        case 18..<24:
             return .bottom
         default:
             return nil
