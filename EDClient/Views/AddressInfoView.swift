@@ -14,7 +14,6 @@ struct AddressInfoView: View {
     var streetName: String
     var buildingNumber: String
     var noAddressInfo: String = ""
-
     
     var body: some View {
         HStack {
@@ -98,7 +97,6 @@ struct AddressInfoView: View {
         )
         .shadow(color: .white.opacity(0.4), radius: 8)
         .padding()
-        
     }
 }
 

@@ -7,8 +7,10 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct PromptsShowView: View {
-    var promptType : InformationType
+    var promptType: InformationType
     let neededSymbolsCount = 2
     
     @Environment(\.dismiss) var dismiss
@@ -16,7 +18,6 @@ struct PromptsShowView: View {
     @State private var searchText: String = ""
     @State private var prompts: [any Prompt] = []
     @State private var isLoading: Bool = false
-    
     
     var body: some View {
         VStack {
@@ -42,43 +43,53 @@ struct PromptsShowView: View {
                 .listStyle(.inset)
                 .navigationTitle(promptType.localizedName)
                 .onChange(of: searchText) { oldValue, newValue in
-                    if oldValue != newValue && !newValue.isEmpty && (newValue.count > neededSymbolsCount || promptType == .building) {
-                        prompts = []
-                        fetchPrompts()
-                    } else if newValue.count <= neededSymbolsCount {
-                        prompts = []
-                    }
+                    handleSearchTextChange(oldValue: oldValue, newValue: newValue)
                 }
                 .overlay {
-                    if isLoading {
-                        ProgressView {
-                            Text("loading")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                        .progressViewStyle(.circular)
-                    } else if prompts.isEmpty && (searchText.count <= neededSymbolsCount || promptType == .building) {
-                        if promptType != .building && searchText.count <= neededSymbolsCount {
-                            ContentUnavailableView(
-                                LocalizedStringKey("3symbolsNeededPromptsShowView"),
-                                systemImage: "magnifyingglass",
-                                description: Text(
-                                    LocalizedStringKey("3symbolsNeededDescriptionPromptsShowView"))
-                            )
-                        } else if promptType == .building && searchText.count == 0 {
-                            ContentUnavailableView(
-                                LocalizedStringKey("startInputBuilding"),
-                                systemImage: "magnifyingglass",
-                                description: Text("inputBuildingDescription")
-                            )
-                        } else {
-                            ContentUnavailableView.search
-                        }
-                    }
+                    contentUnvailableOverlay
                 }
             } else {
-                ContentUnavailableView.init("Connection Error", systemImage: "wifi.slash", description: Text("Failed to connect to the network"))
+                ContentUnavailableView("Connection Error", systemImage: "wifi.slash", description: Text("Failed to connect to the network"))
             }
+        }
+    }
+    
+    private var contentUnvailableOverlay: some View {
+        Group {
+            if isLoading {
+                ProgressView {
+                    Text("loading")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .progressViewStyle(.circular)
+            } else if prompts.isEmpty {
+                if promptType != .building && searchText.count <= neededSymbolsCount {
+                    ContentUnavailableView(
+                        LocalizedStringKey("3symbolsNeededPromptsShowView"),
+                        systemImage: "magnifyingglass",
+                        description: Text(
+                            LocalizedStringKey("3symbolsNeededDescriptionPromptsShowView"))
+                    )
+                } else if promptType == .building && searchText.count == 0 {
+                    ContentUnavailableView(
+                        LocalizedStringKey("startInputBuilding"),
+                        systemImage: "magnifyingglass",
+                        description: Text("inputBuildingDescription")
+                    )
+                } else {
+                    ContentUnavailableView.search
+                }
+            }
+        }
+    }
+    
+    private func handleSearchTextChange(oldValue: String, newValue: String) {
+        if oldValue != newValue && !newValue.isEmpty && (newValue.count > neededSymbolsCount || promptType == .building) {
+            prompts = []
+            fetchPrompts()
+        } else if newValue.count <= neededSymbolsCount {
+            prompts = []
         }
     }
     
@@ -94,7 +105,6 @@ struct PromptsShowView: View {
                 case .building:
                     prompts = try await Client.shared.getPrompts(for: promptType, id: addressInfo.streetID, search: searchText) as [Building]
                 }
-                
             } catch {
                 print("Error fetching prompts: \(error)")
             }
@@ -102,6 +112,7 @@ struct PromptsShowView: View {
         }
     }
 }
+
 
 
 #Preview {

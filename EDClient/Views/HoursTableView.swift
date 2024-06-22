@@ -97,27 +97,9 @@ struct HoursTableView: View {
                 .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
             }
             .defaultScrollAnchor(defaultScrollPoint())
-        }.onAppear {
-            if schedule.disconnections.isEmpty && isScheduleFetched {
-                fillScheduleWithUnknown()
-            }
         }
     }
     
-    
-    private func fillScheduleWithUnknown() {
-        for i in 0...23 {
-            if i > 9 {
-                schedule.disconnections.append(
-                    LightTime(time: "\(i):00", status: .possibleDisconnection)
-                )
-            } else {
-                schedule.disconnections.append(
-                    LightTime(time: "0\(i):00", status: .possibleDisconnection)
-                )
-            }
-        }
-    }
     
     private func defaultScrollPoint() -> UnitPoint? {
         let hour = SpecifiedDateFormat.shared.calendar.component(.hour, from: SpecifiedDateFormat.shared.now)
@@ -125,12 +107,18 @@ struct HoursTableView: View {
         switch hour.self {
         case 0..<6:
             return .top
-        case 6..<12:
-            return .topLeading
-        case 12..<18:
+        case 6...12:
+            return UnitPoint(
+                x: (UnitPoint.top.x + UnitPoint.center.x).remainder(dividingBy: 2),
+                y: (UnitPoint.top.y + UnitPoint.center.y).remainder(dividingBy: 2)
+            )
+        case 13..<18:
             return .center
         case 18..<21:
-            return .bottomLeading
+            return UnitPoint(
+                x: (UnitPoint.center.x + UnitPoint.bottom.x).remainder(dividingBy: 2),
+                y: (UnitPoint.center.y + UnitPoint.bottom.y).remainder(dividingBy: 2)
+            )
         case 21..<24:
             return .bottom
         default:
@@ -171,8 +159,8 @@ struct HoursTableView: View {
             date: "Пт 20.06",
             disconnections: [
                 LightTime(time: "00:00", status: .connected),
-                          LightTime(time: "01:00", status: .possibleDisconnection),
-                          LightTime(time: "02:00", status: .disconnected)
+                LightTime(time: "01:00", status: .possibleDisconnection),
+                LightTime(time: "02:00", status: .disconnected)
             ]
         ))
     )

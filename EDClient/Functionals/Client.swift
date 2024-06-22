@@ -36,7 +36,6 @@ class Client {
             }
         }
     }
-
     
     private func providePromptURL(for promptType: InformationType, id: Int = -1, search: String) -> URL? {
         switch promptType {
