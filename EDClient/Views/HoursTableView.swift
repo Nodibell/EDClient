@@ -107,12 +107,12 @@ struct HoursTableView: View {
         switch hour.self {
         case 0..<6:
             return .top
-        case 6...12:
+        case 6..<12:
             return UnitPoint(
                 x: (UnitPoint.top.x + UnitPoint.center.x).remainder(dividingBy: 2),
                 y: (UnitPoint.top.y + UnitPoint.center.y).remainder(dividingBy: 2)
             )
-        case 13..<18:
+        case 12..<18:
             return .center
         case 18..<21:
             return UnitPoint(
