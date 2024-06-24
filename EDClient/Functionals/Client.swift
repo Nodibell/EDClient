@@ -85,7 +85,6 @@ class Client {
         //return URL(string: "http://localhost:5062/api/Disconnections?cityId=\(cityID)&streetId=\(streetID)&houseId=\(buildingID)")
     }
     
-    // input: uuid: String
     func getPinnedAddresses() async throws -> [PinnedAddress] {
         /*
         guard let uuid = await UIDevice.current.identifierForVendor?.uuidString else {
@@ -116,13 +115,7 @@ class Client {
             return []
         }
         */
-        return [
-            PinnedAddress(cityName: "м. Вінниця (Вінницька Область/М.Вінниця)", streetName: "вулиця Соборна", buildingNumber: "21", cityID: 510100000, streetID: 1652, buildingID: 640864),
-            PinnedAddress(cityName: "м. Козятин (Вінницька Область/М.Вінниця)", streetName: "вулиця Київська", buildingNumber: "42", cityID: 510500000, streetID: 10406, buildingID: 227340),
-            PinnedAddress(cityName: "м. м. Могилів-Подільський (Вінницька Область/М.Вінниця)", streetName: "вулиця Ігоря Римара та Сергія Ковриги", buildingNumber: "10", cityID: 510400000, streetID: 17587, buildingID: 364349),
-            PinnedAddress(cityName: "м. Вінниця (Вінницька Область/М.Вінниця)", streetName: "вулиця Магістрацька", buildingNumber: "12", cityID: 510100000, streetID: 1524, buildingID: 26373),
-            PinnedAddress(cityName: "м. Немирів (Немирівський Район/М.Немирів)", streetName: "вулиця Горького", buildingNumber: "50", cityID: 523010100, streetID: 13366, buildingID: 270425)
-        ]
+        return []
     }
     
     func postPinnedAddress(addressInfo: PinnedAddress) async {

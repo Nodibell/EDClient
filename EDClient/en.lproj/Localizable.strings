@@ -28,3 +28,5 @@
 "noQueueScheduleView" = "No queue was found";
 "noAddressInfoView" = "No information about your needed adddress was found";
 "error" = "Error";
+"connectionErrorTitle" = "Connection Error";
+"connectionErrorDescription" = "Unfortunately, due to the lack of connection to the network, it was not possible to fetch the needed hourly schedule of blackouts";

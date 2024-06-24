@@ -6,34 +6,31 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MainView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query private var pinnedAddresses: [PinnedAddress]
+    
     @State private var isShowingForm = false
-    @State private var pinnedAddresses: [PinnedAddress] = []
     
     var body: some View {
         VStack {
             NavigationStack {
                 VStack {
-                    if InternetChecker.shared.checkConnectivity() {
-                        List {
-                            ForEach(pinnedAddresses, id: \.self) { pinnedAddress in
-                                NavigationLink {
-                                    ScheduleView(addressInfo: pinnedAddress as Address)
-                                } label: {
-                                    PinnedAddressItemView(pinnedAddress: pinnedAddress)
-                                }
+                    List {
+                        ForEach(pinnedAddresses, id: \.self) { pinnedAddress in
+                            NavigationLink {
+                                ScheduleView(addressInfo: pinnedAddress as Address)
+                            } label: {
+                                PinnedAddressItemView(pinnedAddress: pinnedAddress)
                             }
-                            .onDelete { offset in
-                                // needs realization through the client and server
-                                pinnedAddresses.remove(atOffsets: offset)
-                            }
-                        }.listStyle(.inset)
-                        
-                        
-                    } else {
-                        ContentUnavailableView.init("Connection Error", systemImage: "wifi.slash", description: Text("Failed to connect to the network"))
-                    }
+                        }
+                        .onDelete { offset in
+                            // needs realization through the client and server
+                            unpinAddress(offsets: offset)
+                        }
+                    }.listStyle(.inset)
                 }
                 .navigationTitle("pinnedAddressesTitle")
                 
@@ -77,19 +74,15 @@ struct MainView: View {
                 }.background(Color(.secondarySystemBackground))
             }
             .onAppear {
-                fetchPinnedAddresses()
+                
             }
         }
     }
     
-    private func fetchPinnedAddresses() {
-        Task {
-            do {
-                let pinnedAddresses = try await Client.shared.getPinnedAddresses()
-                self.pinnedAddresses = pinnedAddresses
-            } catch {
-                print("Error fetching schedule: \(error)")
-                self.pinnedAddresses = []
+    private func unpinAddress(offsets: IndexSet) {
+        withAnimation {
+            for index in offsets {
+                modelContext.delete(pinnedAddresses[index])
             }
         }
     }

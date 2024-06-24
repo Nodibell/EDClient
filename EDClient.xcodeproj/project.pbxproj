@@ -63,7 +63,7 @@
 		BA9EAE752C2337CD001227D2 /* HoursTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursTableView.swift; sourceTree = "<group>"; };
 		BA9EAE772C242C0A001227D2 /* SpecifiedDateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecifiedDateFormat.swift; sourceTree = "<group>"; };
 		BABE80072C1F3B9E001E4395 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		BABE80092C1F3FF0001E4395 /* PinnedAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedAddress.swift; sourceTree = "<group>"; };
+		BABE80092C1F3FF0001E4395 /* PinnedAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PinnedAddress.swift; path = ../Structs/PinnedAddress.swift; sourceTree = "<group>"; };
 		BABE800D2C1F5D56001E4395 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		BABE80102C206188001E4395 /* PinnedAddressItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedAddressItemView.swift; sourceTree = "<group>"; };
 		BAC20CAB2C1CB7CC00BE8AD5 /* InternetChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetChecker.swift; sourceTree = "<group>"; };
@@ -89,7 +89,6 @@
 				BA403FC82C1E02FC003C23CE /* LightTime.swift */,
 				BA403FCA2C1E0313003C23CE /* Schedule.swift */,
 				BA3355712C1DD1D2003C9499 /* Street.swift */,
-				BABE80092C1F3FF0001E4395 /* PinnedAddress.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -106,6 +105,7 @@
 		BA403FCE2C1E0381003C23CE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BABE80092C1F3FF0001E4395 /* PinnedAddress.swift */,
 				BA46CB482C1B11540062965B /* FormAddress.swift */,
 			);
 			path = Classes;
@@ -131,11 +131,11 @@
 			isa = PBXGroup;
 			children = (
 				BA46CB3F2C1AF6FE0062965B /* Info.plist */,
+				BA46CB2D2C1AE9800062965B /* EDClient.entitlements */,
 				BA46CB272C1AE97E0062965B /* EDClientApp.swift */,
 				BA46CB372C1AEBA70062965B /* Views */,
 				BA46CB362C1AEB900062965B /* Functionals */,
 				BA46CB3A2C1AEE250062965B /* Models */,
-				BA46CB2D2C1AE9800062965B /* EDClient.entitlements */,
 				BA46CB2B2C1AE9800062965B /* Assets.xcassets */,
 				BA46CB2E2C1AE9800062965B /* Preview Content */,
 				BA3355752C1DE65B003C9499 /* Localizable.strings */,

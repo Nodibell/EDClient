@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ScheduleView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query private var pinnedAddresses: [PinnedAddress]
+    
     @State var schedule: Schedule = Schedule()
     @State var isScheduleFetched = false
     @State var addressInfo: Address
@@ -16,75 +20,78 @@ struct ScheduleView: View {
     
     var body: some View {
         VStack {
-            if isScheduleFetched && !schedule.isEmpty {
-                AddressInfoView(
-                    date: SpecifiedDateFormat.shared.formatDay(day: schedule.date) ?? SpecifiedDateFormat.shared.todayDate,
-                    queueName: schedule.queueName ?? NSLocalizedString("noQueueScheduleView", comment: ""),
-                    cityName: addressInfo.cityName,
-                    streetName: addressInfo.streetName,
-                    buildingNumber: addressInfo.buildingNumber
-                )
+            if !InternetChecker.shared.checkConnectivity() {
+                ContentUnavailableView("connectionErrorTitle", systemImage: "wifi.slash", description: Text("connectionErrorDescription"))
             } else {
-                AddressInfoView(
-                    date: SpecifiedDateFormat.shared.todayDate,
-                    queueName: NSLocalizedString("noQueueScheduleView", comment: ""),
-                    cityName: "",
-                    streetName: "",
-                    buildingNumber: "",
-                    noAddressInfo: NSLocalizedString("noAddressInfoView", comment: "")
-                )
-            }
-            
-            HoursTableView(isScheduleFetched: $isScheduleFetched, schedule: $schedule)
-            
-            VStack {
-                Section {
-                    Label(
-                        title: {
-                            Text("noBlackouts")
-                                .font(.caption2)
-                                .monospaced()
-                        },
-                        icon: {
-                            Status.connected.image.foregroundStyle(.green)
-                        }
+                if isScheduleFetched && !schedule.isEmpty {
+                    AddressInfoView(
+                        date: SpecifiedDateFormat.shared.formatDay(day: schedule.date) ?? SpecifiedDateFormat.shared.todayDate,
+                        queueName: schedule.queueName ?? NSLocalizedString("noQueueScheduleView", comment: ""),
+                        cityName: addressInfo.cityName,
+                        streetName: addressInfo.streetName,
+                        buildingNumber: addressInfo.buildingNumber
                     )
-                    Label(
-                        title: {
-                            Text("possibleBlackouts")
-                                .font(.caption2)
-                                .monospaced()
-                        },
-                        icon: {
-                            Status.possibleDisconnection.image.foregroundStyle(.orange)
-                        }
-                    )
-                    Label(
-                        title: {
-                            Text("blackouts")
-                                .font(.caption2)
-                                .monospaced()
-                        },
-                        icon: {
-                            Status.disconnected.image?.foregroundStyle(.red)
-                        }
+                } else {
+                    AddressInfoView(
+                        date: SpecifiedDateFormat.shared.todayDate,
+                        queueName: NSLocalizedString("noQueueScheduleView", comment: ""),
+                        cityName: "",
+                        streetName: "",
+                        buildingNumber: "",
+                        noAddressInfo: NSLocalizedString("noAddressInfoView", comment: "")
                     )
                 }
-                .padding(1)
+                
+                HoursTableView(isScheduleFetched: $isScheduleFetched, schedule: $schedule)
+                
+                VStack {
+                    Section {
+                        Label(
+                            title: {
+                                Text("noBlackouts")
+                                    .font(.caption2)
+                                    .monospaced()
+                            },
+                            icon: {
+                                Status.connected.image.foregroundStyle(.green)
+                            }
+                        )
+                        Label(
+                            title: {
+                                Text("possibleBlackouts")
+                                    .font(.caption2)
+                                    .monospaced()
+                            },
+                            icon: {
+                                Status.possibleDisconnection.image.foregroundStyle(.orange)
+                            }
+                        )
+                        Label(
+                            title: {
+                                Text("blackouts")
+                                    .font(.caption2)
+                                    .monospaced()
+                            },
+                            icon: {
+                                Status.disconnected.image?.foregroundStyle(.red)
+                            }
+                        )
+                    }
+                    .padding(1)
+                }
+                .shadow(color: .white.opacity(0.5), radius: 8)
             }
-            .shadow(color: .white.opacity(0.5), radius: 8)
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 if let isPinned = isPinned {
                     Button(action: {
-                        Task {
                             if isPinned {
-                                await unpinAddress()
+                                unpinAddress()
                             } else {
-                                await pinAddress()
+                                pinAddress()
                             }
-                        }
+                        self.isPinned = checkIfPinned()
                     }) {
                         Label("Pin Address", systemImage: isPinned ? "pin.slash.fill" : "pin.fill").animation(.easeInOut, value: isPinned)
                     }
@@ -104,7 +111,7 @@ struct ScheduleView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            checkIfPinned()
+            isPinned = checkIfPinned()
             fetchSchedule()
         }
         .padding()
@@ -132,28 +139,37 @@ struct ScheduleView: View {
         }
     }
     
-    private func pinAddress() async {
+    private func pinAddress() {
         guard let isPinned = isPinned else {
             return
         }
         if !isPinned {
-            //await Client.shared.postPinnedAddress(addressInfo: addressInfo as! PinnedAddress)
+            if addressInfo is FormAddress {
+                modelContext.insert(PinnedAddress(formAddress: addressInfo as! FormAddress))
+            } else if addressInfo is PinnedAddress {
+                modelContext.insert(addressInfo as! PinnedAddress)
+            }
         }
-        
-        print("Address Pinned")
     }
     
-    private func unpinAddress() async {
-        
+    private func unpinAddress() {
+        withAnimation {
+            if addressInfo is FormAddress {
+                modelContext.delete(PinnedAddress(formAddress: addressInfo as! FormAddress))
+            } else if addressInfo is PinnedAddress {
+                modelContext.delete(addressInfo as! PinnedAddress)
+            }
+        }
     }
     
-    private func checkIfPinned() {
-        Task {
-            isPinned = await Client.shared.isPinnedAddress(
-                addressInfo: addressInfo.self is FormAddress
-                ? PinnedAddress(formAddress: addressInfo as! FormAddress)
-                : addressInfo as! PinnedAddress
-            )
+    private func checkIfPinned() -> Bool {
+        return pinnedAddresses.contains { pinnedAddress in
+            if addressInfo is PinnedAddress {
+                return pinnedAddress == addressInfo as! PinnedAddress
+            } else if addressInfo is FormAddress {
+                return pinnedAddress == PinnedAddress(formAddress: addressInfo as! FormAddress)
+            }
+            return false
         }
     }
 }

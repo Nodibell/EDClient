@@ -2,14 +2,13 @@
 //  PinnedAddress.swift
 //  EDClient
 //
-//  Created by Oleksii Chumak on 16.06.2024.
+//  Created by Oleksii Chumak on 24.06.2024.
 //
 
 import Foundation
-import SwiftData
 
 @Model
-final class PinnedAddress: Address, Equatable {
+struct PinnedAddress: Address, Hashable, Decodable, Equatable {
     var description: String {
         "(Id: \(cityID) CityName: \(cityName)), (Id: \(streetID) StreetName: \(streetName)), (Id: \(buildingID) StreetName: \(buildingNumber))"
     }
@@ -21,7 +20,7 @@ final class PinnedAddress: Address, Equatable {
     let streetID: Int
     let buildingID: Int
     
-    static func == (lhs: PinnedAddress, rhs: PinnedAddress) -> Bool {
+    static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.cityName == rhs.cityName &&
         lhs.streetName == rhs.streetName &&
         lhs.buildingNumber == rhs.buildingNumber &&
