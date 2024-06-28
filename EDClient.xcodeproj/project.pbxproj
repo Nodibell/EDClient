@@ -67,6 +67,8 @@
 		BABE800D2C1F5D56001E4395 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		BABE80102C206188001E4395 /* PinnedAddressItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedAddressItemView.swift; sourceTree = "<group>"; };
 		BAC20CAB2C1CB7CC00BE8AD5 /* InternetChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetChecker.swift; sourceTree = "<group>"; };
+		BAD2B2812C2C493400D5917B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		BAD2B2832C2C493500D5917B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				BA46CB262C1AE97E0062965B /* EDClient */,
+				BAD2B2802C2C493400D5917B /* Frameworks */,
 				BA46CB252C1AE97E0062965B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -194,6 +197,15 @@
 				BA46CB3B2C1AEE3F0062965B /* Prompt.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		BAD2B2802C2C493400D5917B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BAD2B2812C2C493400D5917B /* WidgetKit.framework */,
+				BAD2B2832C2C493500D5917B /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

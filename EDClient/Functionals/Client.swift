@@ -7,7 +7,7 @@
 
 import Foundation
 import Alamofire
-import UIKit
+//import UIKit
 
 class Client {
     public static let shared = Client()
@@ -33,21 +33,21 @@ class Client {
                     case let .failure(error):
                         continuation.resume(throwing: error)
                     }
-            }
+                }
         }
     }
     
     private func providePromptURL(for promptType: InformationType, id: Int = -1, search: String) -> URL? {
         switch promptType {
         case .city:
-            return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/citiesFetch.php?value=\(search)")
-            //return URL(string: "http://localhost:5062/api/Address/City?query=\(search)")
+            //return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/citiesFetch.php?value=\(search)")
+            return URL(string: "http://localhost:8080/api/Address/City?query=\(search)")
         case .street:
-            return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/streetsFetch.php?code=\(id)&search=\(search)")
-            //return URL(string: "http://localhost:5062/api/Address/Street?cityId=\(id)&nameOfStreet=\(search)")
+            //return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/streetsFetch.php?code=\(id)&search=\(search)")
+            return URL(string: "http://localhost:8080/api/Address/Street?cityId=\(id)&nameOfStreet=\(search)")
         case .building:
-            return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/buildingsFetch.php?id=\(id)&search=\(search)")
-            //return URL(string: "http://localhost:5062/api/Address/HouseNumber?streetId=\(id)&numberOfBuild=\(search)")
+            //return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs/buildingsFetch.php?id=\(id)&search=\(search)")
+            return URL(string: "http://localhost:8080/api/Address/HouseNumber?streetId=\(id)&numberOfBuild=\(search)")
         }
     }
     
@@ -81,48 +81,49 @@ class Client {
     
     
     private func provideScheduleURL(cityID: Int, streetID: Int, buildingID: Int) -> URL? {
-        return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs//disconnection.php?cityId=\(cityID)&streetId=\(streetID)&buildingId=\(buildingID)")
-        //return URL(string: "http://localhost:5062/api/Disconnections?cityId=\(cityID)&streetId=\(streetID)&houseId=\(buildingID)")
+        //return URL(string: "http://lab.vntu.vn.ua/webusers/01-21-040/VPs//disconnection.php?cityId=\(cityID)&streetId=\(streetID)&buildingId=\(buildingID)")
+        return URL(string: "http://localhost:8080/api/Disconnections?cityId=\(cityID)&streetId=\(streetID)&houseId=\(buildingID)")
     }
     
     func getPinnedAddresses() async throws -> [PinnedAddress] {
         /*
-        guard let uuid = await UIDevice.current.identifierForVendor?.uuidString else {
-            return []
-        }
-        guard let url = providePinnedAddressesURL(uiid: uuid) else {
-            return []
-        }
-        do {
-            return try await withCheckedThrowingContinuation { continuation in
-                AF.request(url)
-                    .responseData { response in
-                        switch response.result {
-                        case let .success(data):
-                            do {
-                                let pinnedAddresses = try JSONDecoder().decode([PinnedAddress].self, from: data)
-                                continuation.resume(returning: pinnedAddresses)
-                            } catch {
-                                continuation.resume(throwing: error)
-                            }
-                        case let .failure(error):
-                            continuation.resume(throwing: error)
-                        }
-                    }
-            }
-        } catch {
-            print("Error fetching or decoding schedule: \(error)")
-            return []
-        }
-        */
+         guard let uuid = await UIDevice.current.identifierForVendor?.uuidString else {
+         return []
+         }
+         guard let url = providePinnedAddressesURL(uiid: uuid) else {
+         return []
+         }
+         do {
+         return try await withCheckedThrowingContinuation { continuation in
+         AF.request(url)
+         .responseData { response in
+         switch response.result {
+         case let .success(data):
+         do {
+         let pinnedAddresses = try JSONDecoder().decode([PinnedAddress].self, from: data)
+         continuation.resume(returning: pinnedAddresses)
+         } catch {
+         continuation.resume(throwing: error)
+         }
+         case let .failure(error):
+         continuation.resume(throwing: error)
+         }
+         }
+         }
+         } catch {
+         print("Error fetching or decoding schedule: \(error)")
+         return []
+         }
+         */
         return []
     }
     
     func postPinnedAddress(addressInfo: PinnedAddress) async {
-        guard let uuid = await UIDevice.current.identifierForVendor?.uuidString else {
+        /*guard let uuid = await UIDevice.current.identifierForVendor?.uuidString else {
             return
         }
         print(uuid.description, addressInfo.description)
+         */
     }
     
     func isPinnedAddress(addressInfo: PinnedAddress) async -> Bool? {
@@ -141,10 +142,10 @@ class Client {
         }
     }
     
-
+    
     
     private func providePinnedAddressesURL(uiid: String) -> URL? {
-        return URL(string: "http://localhost:5062/api/PinnedAddresses?DeviceID=\(uiid)")
+        return URL(string: "http://localhost:8080/api/PinnedAddresses?DeviceID=\(uiid)")
     }
 }
 

@@ -44,7 +44,7 @@ struct AddressInfoView: View {
                         style: .continuous
                     ))
                     .padding(4)
-                    .background(.orange)
+                    .background(Color.orange.grayscale(0.2))
                     .clipShape(RoundedRectangle(
                         cornerRadius: 10,
                         style: .continuous
@@ -58,7 +58,7 @@ struct AddressInfoView: View {
                     .foregroundColor(.white)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
-                    .background(Color.orange)
+                    .background(Color.orange.grayscale(0.2))
                     .clipShape(RoundedRectangle(
                         cornerRadius: 8,
                         style: .continuous
@@ -76,7 +76,7 @@ struct AddressInfoView: View {
                     .italic()
                     .padding(.horizontal, 5)
                     .padding(.vertical, 2)
-                    .background(Color.orange)
+                    .background(Color.orange.grayscale(0.2))
                     .clipShape(RoundedRectangle(
                         cornerRadius: 8,
                         style: .continuous
@@ -86,8 +86,10 @@ struct AddressInfoView: View {
             }
             .padding()
         }
-        .background(LinearGradient(colors: [.orange.opacity(3), .pink.opacity(2), .indigo.opacity(3)], startPoint: .bottomTrailing, endPoint: .topLeading)
-            .grayscale(0.25))
+        .background(
+            LinearGradient(colors: [.orange.opacity(3), .pink.opacity(2), .indigo.opacity(3)], startPoint: .bottomTrailing, endPoint: .topLeading)
+            .grayscale(0.25)
+        )
         
         .clipShape(
             RoundedRectangle(

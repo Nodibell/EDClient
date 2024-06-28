@@ -16,7 +16,7 @@
 "3symbolsNeededDescriptionPromptsShowView" = "Please, enter at least three symbols to start searching for the wanted";
 "startInputBuilding" = "Start enter the building";
 "inputBuildingDescription" = "Enter the building you need to start searching.";
-"scheduleFormTitle" = "Get Blackouts Schedule";
+"scheduleFormTitle" = "Blackouts Schedule";
 "loading" = "Loading";
 "noBlackouts" = "– no blackouts are planned";
 "possibleBlackouts" = "– possible blackouts";

@@ -18,7 +18,7 @@ struct HoursTableView: View {
                     .frame(width: 160, height: 30)
                     .foregroundStyle(.white)
                     .padding(2)
-                    .background(Color.orange)
+                    .background(Color.orange.grayscale(0.2))
                     .bold()
                     .clipShape(
                         RoundedRectangle(
@@ -38,7 +38,7 @@ struct HoursTableView: View {
                     .frame(width: 160, height: 30)
                     .foregroundStyle(.white)
                     .padding(2)
-                    .background(Color.orange)
+                    .background(Color.orange.grayscale(0.2))
                     .bold()
                     .clipShape(
                         RoundedRectangle(
